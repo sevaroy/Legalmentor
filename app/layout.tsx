@@ -21,12 +21,12 @@ const fontSans = FontSans({
   variable: '--font-sans'
 })
 
-const title = 'Morphic'
+const title = 'LegalMentor'
 const description =
-  'A fully open-source AI-powered answer engine with a generative UI.'
+  'AI-powered legal study assistant with generative answers and case law search.'
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://morphic.sh'),
+  metadataBase: new URL('https://legalmentor.ai'),
   title,
   description,
   openGraph: {

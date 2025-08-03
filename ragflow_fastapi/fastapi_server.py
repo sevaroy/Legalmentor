@@ -351,13 +351,13 @@ if __name__ == "__main__":
     import uvicorn
     
     print("🚀 啟動 RAGFlow FastAPI 後端服務")
-    print("📡 API 文檔: http://localhost:8000/docs")
-    print("🔗 ReDoc 文檔: http://localhost:8000/redoc")
+    print("📡 API 文檔: http://localhost:8001/docs")
+    print("🔗 ReDoc 文檔: http://localhost:8001/redoc")
     
     uvicorn.run(
         "fastapi_server:app",
         host="0.0.0.0",
-        port=8000,
+        port=8001,
         reload=True,
         log_level="info"
     )

@@ -1,8 +1,9 @@
 {
-  "name": "morphic",
+  "name": "legalmentor",
   "version": "0.1.0",
   "private": true,
   "license": "Apache-2.0",
+  "description": "AI-powered legal study assistant with generative answers and case law search.",
   "scripts": {
     "dev": "next dev --turbo",
     "build": "next build",

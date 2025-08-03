@@ -17,7 +17,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ### Docker
 
 - `docker compose up -d` - Run the application with Docker
-- `docker pull ghcr.io/miurla/morphic:latest` - Pull prebuilt Docker image
+- `docker pull ghcr.io/your-username/legalmentor:latest` - Pull prebuilt Docker image
 
 ## Architecture Overview
 
@@ -127,3 +127,140 @@ When working with Supabase, follow the cursor rules in `.cursor/rules/` for:
 - Setting up RLS policies
 - Writing edge functions
 - SQL style guide
+
+---
+
+## RAGFlow 知識庫整合開發計劃
+
+### 階段 1: 最小可行產品 (MVP) - 1-2 週
+
+#### 目標
+將 RAGFlow 知識庫功能整合到現有 Morphic 專案中，實現基本的知識庫問答功能。
+
+#### 開發步驟
+
+##### 1. 環境配置 (Day 1)
+- [ ] 添加 RAGFlow 相關環境變數到 `.env.local`
+  ```bash
+  RAGFLOW_API_URL=http://localhost:9380
+  RAGFLOW_API_KEY=your-api-key-here
+  RAGFLOW_PROXY_URL=http://localhost:8000  # 可選，如使用代理服務
+  ```
+- [ ] 更新 `next.config.mjs` 支持 RAGFlow API 調用
+- [ ] 安裝必要的依賴包
+
+##### 2. RAGFlow 客戶端整合 (Day 2-3)
+- [ ] 創建 `lib/clients/ragflow-client.ts`
+  ```typescript
+  export class RAGFlowClient {
+    private apiUrl: string
+    private apiKey: string
+    
+    async getDatasets(): Promise<Dataset[]>
+    async createSession(datasetId: string): Promise<string>
+    async chat(sessionId: string, question: string): Promise<ChatResponse>
+  }
+  ```
+- [ ] 實現錯誤處理和重試機制
+- [ ] 添加 TypeScript 類型定義 `lib/types/ragflow.ts`
+
+##### 3. API 路由擴展 (Day 4-5)
+- [ ] 修改 `app/api/chat/route.ts` 支持模式選擇
+  ```typescript
+  export async function POST(request: Request) {
+    const { messages, mode, datasetId } = await request.json()
+    
+    if (mode === 'knowledge') {
+      return await handleKnowledgeChat(messages, datasetId)
+    }
+    
+    // 現有的 web search 邏輯
+    return await handleWebSearch(messages)
+  }
+  ```
+- [ ] 新增 `app/api/datasets/route.ts` 獲取知識庫列表
+- [ ] 新增 `app/api/sessions/route.ts` 管理 RAGFlow 會話
+
+##### 4. 前端 UI 擴展 (Day 6-8)
+- [ ] 修改 `components/chat-interface.tsx` 添加模式切換
+  ```tsx
+  const [chatMode, setChatMode] = useState<'web' | 'knowledge'>('web')
+  const [selectedDataset, setSelectedDataset] = useState<Dataset | null>(null)
+  ```
+- [ ] 創建 `components/mode-selector.tsx` 模式選擇組件
+- [ ] 創建 `components/dataset-selector.tsx` 知識庫選擇組件
+- [ ] 更新聊天消息顯示，支持知識庫來源引用
+
+##### 5. 狀態管理整合 (Day 9-10)
+- [ ] 修改 `hooks/use-chat.ts` 支持知識庫模式
+- [ ] 實現會話狀態管理，區分 web 和 knowledge 會話
+- [ ] 添加知識庫選擇狀態持久化
+
+##### 6. 測試與優化 (Day 11-14)
+- [ ] 單元測試：RAGFlow 客戶端功能
+- [ ] 集成測試：端到端聊天流程
+- [ ] 性能測試：響應時間和併發處理
+- [ ] UI/UX 測試：用戶體驗優化
+
+#### 技術架構
+
+```mermaid
+flowchart TD
+    A[前端 Chat Interface] --> B{模式選擇}
+    B -->|Web| C[Web Search Agent]
+    B -->|Knowledge| D[RAGFlow Agent]
+    
+    D --> E[RAGFlow Client]
+    E --> F[RAGFlow API]
+    F --> G[(知識庫)]
+    
+    C --> H[Tavily/SearxNG]
+    H --> I[(Web Results)]
+    
+    D --> J[格式化回應]
+    C --> J
+    J --> A
+```
+
+#### 文件結構
+```
+lib/
+├── clients/
+│   └── ragflow-client.ts          # RAGFlow API 客戶端
+├── agents/
+│   └── ragflow-agent.ts           # RAGFlow 代理邏輯
+├── types/
+│   └── ragflow.ts                 # RAGFlow 類型定義
+└── utils/
+    └── session-manager.ts         # 會話管理工具
+
+components/
+├── mode-selector.tsx              # 模式選擇組件
+├── dataset-selector.tsx           # 知識庫選擇組件
+└── knowledge-source-display.tsx   # 知識來源顯示組件
+
+app/api/
+├── chat/route.ts                  # 修改支持模式選擇
+├── datasets/route.ts              # 知識庫列表 API
+└── sessions/route.ts              # 會話管理 API
+```
+
+#### 成功指標
+- [ ] 用戶可以在 Web 搜索和知識庫模式間切換
+- [ ] 知識庫模式能正確返回相關答案和來源
+- [ ] 會話狀態正確管理，支持多輪對話
+- [ ] 響應時間 < 3 秒
+- [ ] 錯誤處理完善，用戶體驗流暢
+
+#### 風險與緩解
+- **RAGFlow 服務不穩定**: 實現重試機制和降級策略
+- **API 響應慢**: 添加加載狀態和超時處理
+- **知識庫內容不足**: 提供 Web 搜索作為備選方案
+- **會話管理複雜**: 簡化初版實現，後續迭代優化
+
+#### 後續階段預覽
+- **階段 2**: 混合搜索模式 (Web + Knowledge)
+- **階段 3**: 智能路由和意圖識別
+- **階段 4**: 高級功能 (多知識庫、個性化等)
+
+---
