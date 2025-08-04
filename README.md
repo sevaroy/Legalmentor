@@ -11,6 +11,8 @@ An AI-powered search engine with a generative UI.
 - 🚀 [Quickstart](#-quickstart)
 - 🌐 [Deploy](#-deploy)
 - 🔎 [Search Engine](#-search-engine)
+- 📁 [Project Structure](#-project-structure)
+- 🧪 [Testing](#-testing)
 - 💙 [Sponsors](#-sponsors)
 - 👥 [Contributing](#-contributing)
 - 📄 [License](#-license)
@@ -202,6 +204,54 @@ If you want to use LegalMentor as a search engine in your browser, follow these 
 7. Find "LegalMentor" in the list of site search, click on the three dots next to it, and select "Make default".
 
 This will allow you to use LegalMentor as your default search engine in the browser.
+
+## 📁 Project Structure
+
+The project has been organized into a clean directory structure:
+
+```
+morphic/
+├── app/                    # Next.js 应用页面
+├── components/             # React 组件
+├── lib/                    # 核心库文件
+├── hooks/                  # React Hooks
+├── ragflow_fastapi/        # RAGFlow FastAPI 服务
+├── tests/                  # 测试文件
+│   ├── unit/              # 单元测试
+│   ├── integration/       # 集成测试
+│   └── e2e/               # 端到端测试
+├── tools/                  # 工具脚本
+├── config/                 # 配置文件
+└── docs/                   # 项目文档
+```
+
+For detailed information about the file structure, see [docs/FILE_STRUCTURE.md](docs/FILE_STRUCTURE.md).
+
+## 🧪 Testing
+
+### Running Tests
+
+```bash
+# 运行所有测试
+./tools/run-tests.sh all
+
+# 运行单元测试
+./tools/run-tests.sh unit
+
+# 运行集成测试
+./tools/run-tests.sh integration
+
+# 运行端到端测试
+./tools/run-tests.sh e2e
+```
+
+### Test Categories
+
+- **Unit Tests**: Located in `tests/unit/` - Test individual components and functions
+- **Integration Tests**: Located in `tests/integration/` - Test API connections and service integrations
+- **E2E Tests**: Located in `tests/e2e/` - Test complete user workflows
+
+For more testing information, see [docs/TESTING_GUIDE.md](docs/TESTING_GUIDE.md).
 
 ## 💙 Sponsors
 
