@@ -57,6 +57,7 @@ export interface RAGFlowError {
 }
 
 export type ChatMode = 'web' | 'knowledge' | 'hybrid'
+export type SearchStrategy = 'single' | 'intelligent' | 'multi'
 
 export interface ChatOptions {
   mode: ChatMode
@@ -65,6 +66,7 @@ export interface ChatOptions {
   userId?: string
   quote?: boolean
   stream?: boolean
+  searchStrategy?: SearchStrategy
 }
 
 export interface KnowledgeSearchResult {

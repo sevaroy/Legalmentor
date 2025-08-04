@@ -6,7 +6,14 @@ import { redirect } from 'next/navigation'
 import { getRedisClient, RedisWrapper } from '@/lib/redis/config'
 import { type Chat } from '@/lib/types'
 
-async function getRedis(): Promise<RedisWrapper> {
+function isChatHistoryEnabled(): boolean {
+  return process.env.NEXT_PUBLIC_ENABLE_SAVE_CHAT_HISTORY === 'true'
+}
+
+async function getRedis(): Promise<RedisWrapper | null> {
+  if (!isChatHistoryEnabled()) {
+    return null
+  }
   return await getRedisClient()
 }
 
@@ -16,12 +23,14 @@ function getUserChatKey(userId: string) {
 }
 
 export async function getChats(userId?: string | null) {
-  if (!userId) {
+  if (!userId || !isChatHistoryEnabled()) {
     return []
   }
 
   try {
     const redis = await getRedis()
+    if (!redis) return []
+    
     const chats = await redis.zrange(getUserChatKey(userId), 0, -1, {
       rev: true
     })
@@ -68,8 +77,14 @@ export async function getChatsPage(
   limit = 20,
   offset = 0
 ): Promise<{ chats: Chat[]; nextOffset: number | null }> {
+  if (!isChatHistoryEnabled()) {
+    return { chats: [], nextOffset: null }
+  }
+  
   try {
     const redis = await getRedis()
+    if (!redis) return { chats: [], nextOffset: null }
+    
     const userChatKey = getUserChatKey(userId)
     const start = offset
     const end = offset + limit - 1
@@ -120,7 +135,13 @@ export async function getChatsPage(
 }
 
 export async function getChat(id: string, userId: string = 'anonymous') {
+  if (!isChatHistoryEnabled()) {
+    return null
+  }
+  
   const redis = await getRedis()
+  if (!redis) return null
+  
   const chat = await redis.hgetall<Chat>(`chat:${id}`)
 
   if (!chat) {
@@ -147,7 +168,13 @@ export async function getChat(id: string, userId: string = 'anonymous') {
 export async function clearChats(
   userId: string = 'anonymous'
 ): Promise<{ error?: string }> {
+  if (!isChatHistoryEnabled()) {
+    return { error: 'Chat history is disabled' }
+  }
+  
   const redis = await getRedis()
+  if (!redis) return { error: 'Redis not available' }
+  
   const userChatKey = getUserChatKey(userId)
   const chats = await redis.zrange(userChatKey, 0, -1)
   if (!chats.length) {
@@ -170,8 +197,14 @@ export async function deleteChat(
   chatId: string,
   userId = 'anonymous'
 ): Promise<{ error?: string }> {
+  if (!isChatHistoryEnabled()) {
+    return { error: 'Chat history is disabled' }
+  }
+  
   try {
     const redis = await getRedis()
+    if (!redis) return { error: 'Redis not available' }
+    
     const userKey = getUserChatKey(userId)
     const chatKey = `chat:${chatId}`
 
@@ -203,8 +236,14 @@ export async function deleteChat(
 }
 
 export async function saveChat(chat: Chat, userId: string = 'anonymous') {
+  if (!isChatHistoryEnabled()) {
+    return null
+  }
+  
   try {
     const redis = await getRedis()
+    if (!redis) return null
+    
     const pipeline = redis.pipeline()
 
     const chatToSave = {
@@ -224,7 +263,13 @@ export async function saveChat(chat: Chat, userId: string = 'anonymous') {
 }
 
 export async function getSharedChat(id: string) {
+  if (!isChatHistoryEnabled()) {
+    return null
+  }
+  
   const redis = await getRedis()
+  if (!redis) return null
+  
   const chat = await redis.hgetall<Chat>(`chat:${id}`)
 
   if (!chat || !chat.sharePath) {
@@ -235,7 +280,13 @@ export async function getSharedChat(id: string) {
 }
 
 export async function shareChat(id: string, userId: string = 'anonymous') {
+  if (!isChatHistoryEnabled()) {
+    return null
+  }
+  
   const redis = await getRedis()
+  if (!redis) return null
+  
   const chat = await redis.hgetall<Chat>(`chat:${id}`)
 
   if (!chat || chat.userId !== userId) {

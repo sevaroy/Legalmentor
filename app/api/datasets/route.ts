@@ -1,41 +1,40 @@
 /**
  * 數據集 API 端點
- * 獲取 RAGFlow 知識庫列表
+ * 獲取可用的知識庫列表
  */
 
-import { RAGFlowAgent } from '@/lib/agents/ragflow-agent'
+import { RAGFlowClient } from '@/lib/clients/ragflow-client'
 import { NextRequest, NextResponse } from 'next/server'
+
+export const maxDuration = 10
 
 export async function GET(request: NextRequest) {
   try {
-    const ragflowAgent = new RAGFlowAgent()
+    // 創建 RAGFlow 客戶端
+    const ragflowClient = new RAGFlowClient()
     
-    // 檢查 RAGFlow 服務健康狀態
-    const isHealthy = await ragflowAgent.healthCheck()
-    if (!isHealthy) {
-      return NextResponse.json(
-        { error: 'RAGFlow 服務不可用' },
-        { status: 503 }
-      )
-    }
-
     // 獲取數據集列表
-    const datasets = await ragflowAgent.getAvailableDatasets()
+    const datasets = await ragflowClient.getDatasets()
+    
+    // 按文檔數量排序（文檔多的優先）
+    const sortedDatasets = datasets.sort((a, b) => b.document_count - a.document_count)
     
     return NextResponse.json({
       success: true,
-      data: datasets,
-      count: datasets.length
+      data: sortedDatasets,
+      count: sortedDatasets.length,
+      timestamp: new Date().toISOString()
     })
 
   } catch (error) {
     console.error('Failed to fetch datasets:', error)
     
     return NextResponse.json(
-      { 
+      {
         success: false,
+        data: [],
         error: error instanceof Error ? error.message : '獲取知識庫列表失敗',
-        data: []
+        timestamp: new Date().toISOString()
       },
       { status: 500 }
     )

@@ -16,7 +16,9 @@ export class RAGFlowAgent {
   private defaultDatasetId?: string
 
   constructor(baseUrl?: string) {
-    this.client = new RAGFlowClient(baseUrl)
+    // Use environment variables for configuration
+    const proxyUrl = process.env.RAGFLOW_PROXY_URL || baseUrl
+    this.client = new RAGFlowClient(proxyUrl)
   }
 
   /**
@@ -55,22 +57,193 @@ export class RAGFlowAgent {
       throw new Error('沒有可用的知識庫')
     }
 
-    // 簡單的關鍵詞匹配邏輯
+    return this.intelligentDatasetSelection(question, datasets)
+  }
+
+  /**
+   * 智能數據集選擇邏輯
+   */
+  private intelligentDatasetSelection(question: string, datasets: RAGFlowDataset[]): string {
     const question_lower = question.toLowerCase()
     
-    // 法律相關關鍵詞匹配
-    if (question_lower.includes('憲法') || question_lower.includes('行政法')) {
-      const constitutionalDataset = datasets.find(d => d.name.includes('憲法') || d.name.includes('行政法'))
-      if (constitutionalDataset) return constitutionalDataset.id
-    }
-    
-    if (question_lower.includes('民法') || question_lower.includes('民事')) {
-      const civilDataset = datasets.find(d => d.name.includes('民法') || d.name.includes('民事'))
-      if (civilDataset) return civilDataset.id
+    // 定義關鍵詞映射規則
+    const keywordRules = [
+      {
+        keywords: ['憲法', '行政法', '行政', '公法', '政府', '行政機關'],
+        datasetPatterns: ['憲法', '行政法', '公法', 'constitutional', 'administrative']
+      },
+      {
+        keywords: ['民法', '民事', '契約', '侵權', '物權', '債權'],
+        datasetPatterns: ['民法', '民事', 'civil', 'contract']
+      },
+      {
+        keywords: ['刑法', '刑事', '犯罪', '刑罰', '起訴'],
+        datasetPatterns: ['刑法', '刑事', 'criminal', 'penal']
+      },
+      {
+        keywords: ['商法', '公司法', '商業', '企業', '股份'],
+        datasetPatterns: ['商法', '公司法', 'commercial', 'corporate', 'business']
+      }
+    ]
+
+    // 計算每個數據集的匹配分數
+    const scores = datasets.map(dataset => {
+      let score = 0
+      const datasetName = dataset.name.toLowerCase()
+      const datasetDesc = (dataset.description || '').toLowerCase()
+      
+      for (const rule of keywordRules) {
+        // 檢查問題中是否包含關鍵詞
+        const questionMatches = rule.keywords.some(keyword => 
+          question_lower.includes(keyword)
+        )
+        
+        if (questionMatches) {
+          // 檢查數據集名稱或描述是否匹配
+          const datasetMatches = rule.datasetPatterns.some(pattern =>
+            datasetName.includes(pattern) || datasetDesc.includes(pattern)
+          )
+          
+          if (datasetMatches) {
+            score += 10 // 高權重匹配
+          }
+        }
+      }
+      
+      return { dataset, score }
+    })
+
+    // 選擇分數最高的數據集
+    const bestMatch = scores.reduce((best, current) => 
+      current.score > best.score ? current : best
+    )
+
+    // 如果沒有明確匹配，選擇文檔數量最多的數據集
+    if (bestMatch.score === 0) {
+      const largestDataset = datasets.reduce((largest, current) =>
+        current.document_count > largest.document_count ? current : largest
+      )
+      return largestDataset.id
     }
 
-    // 默認使用第一個數據集
-    return datasets[0].id
+    return bestMatch.dataset.id
+  }
+
+  /**
+   * 多知識庫搜索
+   * 同時搜索多個相關知識庫並合併結果
+   */
+  async multiDatasetSearch(question: string, options: Partial<ChatOptions> = {}): Promise<KnowledgeSearchResult> {
+    const datasets = await this.getAvailableDatasets()
+    
+    if (datasets.length === 0) {
+      throw new Error('沒有可用的知識庫')
+    }
+
+    // 選擇相關的數據集（最多3個）
+    const relevantDatasets = this.selectRelevantDatasets(question, datasets).slice(0, 3)
+    
+    // 並行搜索多個數據集
+    const searchPromises = relevantDatasets.map(async (dataset) => {
+      try {
+        const result = await this.search(question, {
+          ...options,
+          datasetId: dataset.id
+        })
+        return { dataset, result, success: true }
+      } catch (error) {
+        console.warn(`搜索數據集 ${dataset.name} 失敗:`, error)
+        return { dataset, result: null, success: false }
+      }
+    })
+
+    const searchResults = await Promise.all(searchPromises)
+    const successfulResults = searchResults.filter(r => r.success && r.result)
+
+    if (successfulResults.length === 0) {
+      throw new Error('所有知識庫搜索都失敗了')
+    }
+
+    // 合併結果
+    return this.mergeSearchResults(successfulResults.map(r => r.result!), question)
+  }
+
+  /**
+   * 選擇相關的數據集
+   */
+  private selectRelevantDatasets(question: string, datasets: RAGFlowDataset[]): RAGFlowDataset[] {
+    const question_lower = question.toLowerCase()
+    
+    // 為每個數據集計算相關性分數
+    const scoredDatasets = datasets.map(dataset => {
+      let relevanceScore = 0
+      const name = dataset.name.toLowerCase()
+      const desc = (dataset.description || '').toLowerCase()
+      
+      // 基於關鍵詞匹配計算分數
+      const keywords = ['法', '法律', '規定', '條文', '法規', '判決']
+      keywords.forEach(keyword => {
+        if (question_lower.includes(keyword)) {
+          if (name.includes(keyword) || desc.includes(keyword)) {
+            relevanceScore += 2
+          }
+        }
+      })
+      
+      // 基於文檔數量給予額外分數（更多文檔可能包含更多信息）
+      relevanceScore += Math.min(dataset.document_count / 100, 3)
+      
+      return { dataset, score: relevanceScore }
+    })
+
+    // 按分數排序並返回
+    return scoredDatasets
+      .sort((a, b) => b.score - a.score)
+      .map(item => item.dataset)
+  }
+
+  /**
+   * 合併多個搜索結果
+   */
+  private mergeSearchResults(results: KnowledgeSearchResult[], question: string): KnowledgeSearchResult {
+    // 選擇置信度最高的結果作為主要答案
+    const bestResult = results.reduce((best, current) => 
+      (current.confidence || 0) > (best.confidence || 0) ? current : best
+    )
+
+    // 合併所有來源
+    const allSources = results.flatMap(r => r.sources)
+    
+    // 去重並按相似度排序
+    const uniqueSources = allSources
+      .filter((source, index, arr) => 
+        arr.findIndex(s => s.doc_name === source.doc_name && s.content === source.content) === index
+      )
+      .sort((a, b) => (b.similarity || 0) - (a.similarity || 0))
+      .slice(0, 5) // 最多保留5個來源
+
+    // 合併數據集名稱
+    const datasetNames = [...new Set(results.map(r => r.dataset_name))].join(', ')
+
+    return {
+      answer: bestResult.answer,
+      sources: uniqueSources,
+      session_id: bestResult.session_id,
+      dataset_name: datasetNames,
+      confidence: this.calculateCombinedConfidence(results)
+    }
+  }
+
+  /**
+   * 計算合併結果的置信度
+   */
+  private calculateCombinedConfidence(results: KnowledgeSearchResult[]): number {
+    if (results.length === 0) return 0
+
+    const avgConfidence = results.reduce((sum, r) => sum + (r.confidence || 0), 0) / results.length
+    const bonusForMultipleSources = Math.min(results.length * 0.1, 0.2)
+    
+    return Math.min(0.95, avgConfidence + bonusForMultipleSources)
   }
 
   /**
@@ -85,10 +258,14 @@ export class RAGFlowAgent {
       const request: RAGFlowChatRequest = {
         question,
         dataset_id: datasetId,
-        session_id: options.sessionId,
         user_id: options.userId,
         quote: options.quote ?? true,
         stream: options.stream ?? false
+      }
+
+      // 只有當 sessionId 存在且不是臨時生成的時候才傳遞
+      if (options.sessionId && !options.sessionId.startsWith('session-')) {
+        request.session_id = options.sessionId
       }
 
       // 發送請求

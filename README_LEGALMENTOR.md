@@ -1,13 +1,85 @@
-# LegalMentor
+# LegalMentor - 智能混合搜索系統
 
-AI-powered legal study assistant with generative answers and case law search.
+AI-powered legal study assistant with hybrid search capabilities, combining Tavily web search and RAGFlow knowledge base.
 
-## 🚀 Features
+## 🚀 快速開始
 
-- **Legal-Focused AI**: Tailored for law students and legal professionals
-- **Case Law Search**: Search through legal precedents and case law
-- **Exam Preparation**: Practice with AI-generated legal questions
-- **Multi-Provider Support**: OpenAI, Anthropic, Google, and more
+### 一鍵啟動本地測試環境
+
+```bash
+# 設置執行權限
+chmod +x start-local.sh stop-local.sh
+
+# 啟動所有服務
+./start-local.sh
+
+# 停止所有服務
+./stop-local.sh
+```
+
+### 手動設置（詳細步驟）
+
+1. **環境準備**
+   ```bash
+   # 複製環境變數檔案
+   cp .env.local.example .env.local
+   
+   # 編輯 .env.local 設置您的 API Keys
+   # OPENAI_API_KEY=your_openai_key
+   # TAVILY_API_KEY=your_tavily_key
+   ```
+
+2. **安裝依賴**
+   ```bash
+   # Node.js 依賴
+   bun install  # 或 npm install
+   
+   # Python 依賴
+   cd ragflow_fastapi
+   pip install fastapi uvicorn requests python-dotenv
+   cd ..
+   ```
+
+3. **啟動服務**
+   ```bash
+   # 終端 1: 啟動 RAGFlow 服務
+   cd ragflow_fastapi && python fastapi_server.py
+   
+   # 終端 2: 啟動 Next.js 應用
+   bun run dev  # 或 npm run dev
+   ```
+
+## 🧪 測試功能
+
+### 自動化測試
+```bash
+# 執行全功能測試
+node scripts/test-all-features.js
+```
+
+### 手動測試頁面
+- **主頁**: http://localhost:3000
+- **混合搜索**: http://localhost:3000/hybrid-search
+- **策略演示**: http://localhost:3000/strategy-demo
+
+### API 測試
+```bash
+# 測試混合搜索
+curl -X POST http://localhost:3000/api/chat/hybrid \
+  -H "Content-Type: application/json" \
+  -d '{"messages": [{"role": "user", "content": "民法契約規定"}], "searchMode": "intelligent"}'
+
+# 測試數據集列表
+curl http://localhost:3000/api/datasets
+```
+
+## ✨ 核心功能
+
+- **智能混合搜索**: 結合 Tavily 網路搜索和 RAGFlow 知識庫
+- **智能策略選擇**: 根據問題類型自動選擇最佳搜索策略
+- **法律專業優化**: 針對法律領域優化的搜索和回答
+- **多知識庫支援**: 支援多個專業知識庫的智能選擇
+- **實時網路搜索**: 獲取最新的法律資訊和時事
 - **Chat History**: Save and review your legal research sessions
 - **Real-time Search**: Web search for latest legal developments
 

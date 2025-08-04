@@ -34,23 +34,23 @@ const modeConfig = {
   web: {
     icon: Globe,
     label: 'Web 搜索',
-    description: '搜索網路上的最新資訊',
+    description: '使用 Tavily 搜索網路上的最新資訊',
     color: 'bg-blue-500',
     badge: '即時'
   },
   knowledge: {
     icon: BookOpen,
     label: '知識庫',
-    description: '搜索專業知識庫內容',
+    description: '搜索 RAGFlow 專業知識庫內容',
     color: 'bg-green-500',
     badge: '專業'
   },
   hybrid: {
     icon: Zap,
-    label: '混合模式',
-    description: '結合網路搜索和知識庫',
+    label: '混合搜索',
+    description: '智能結合 Tavily 網路搜索和 RAGFlow 知識庫',
     color: 'bg-purple-500',
-    badge: '智能'
+    badge: '全能'
   }
 }
 
@@ -128,22 +128,26 @@ export function ModeSelector({
           {/* 模式特定說明 */}
           {mode === 'web' && (
             <div className="mt-2 text-xs text-muted-foreground">
-              • 搜索最新網路資訊<br/>
-              • 適合時事、新聞、即時資料
+              • 使用 Tavily 深度搜索網路資訊<br/>
+              • 適合時事、新聞、最新資料<br/>
+              • 支援基礎和進階搜索模式
             </div>
           )}
           
           {mode === 'knowledge' && (
             <div className="mt-2 text-xs text-muted-foreground">
-              • 搜索專業知識庫<br/>
-              • 適合法律、學術、專業領域
+              • 搜索 RAGFlow 專業知識庫<br/>
+              • 適合法律、學術、專業領域<br/>
+              • 支援單庫、智能選擇、多庫搜索
             </div>
           )}
           
           {mode === 'hybrid' && (
             <div className="mt-2 text-xs text-muted-foreground">
-              • 智能選擇搜索方式<br/>
-              • 結合網路和知識庫優勢
+              • 同時使用 Tavily 和 RAGFlow<br/>
+              • 智能決定搜索策略<br/>
+              • 合併網路和知識庫結果<br/>
+              • 提供最全面的答案
             </div>
           )}
         </div>

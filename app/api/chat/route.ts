@@ -19,10 +19,47 @@ const DEFAULT_MODEL: Model = {
 
 export async function POST(req: Request) {
   try {
-    const { messages, id: chatId } = await req.json()
+    const { messages, id: chatId, mode, datasetId, searchMode } = await req.json()
     const referer = req.headers.get('referer')
     const isSharePage = referer?.includes('/share/')
     const userId = await getCurrentUserId()
+
+    // 如果是知識庫模式，重定向到 RAGFlow API
+    if (mode === 'knowledge' && !isSharePage) {
+      try {
+        const ragflowResponse = await fetch(`${req.url.replace('/api/chat', '/api/chat/ragflow')}`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'referer': referer || ''
+          },
+          body: JSON.stringify({
+            messages,
+            datasetId,
+            searchMode: searchMode || 'intelligent'
+          })
+        })
+
+        const ragflowResult = await ragflowResponse.json()
+        return new Response(JSON.stringify(ragflowResult), {
+          status: ragflowResponse.status,
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        })
+      } catch (error) {
+        console.error('RAGFlow API call failed:', error)
+        return new Response(JSON.stringify({
+          success: false,
+          error: 'RAGFlow 服務暫時不可用，請稍後再試'
+        }), {
+          status: 500,
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        })
+      }
+    }
 
     if (isSharePage) {
       return new Response('Chat API is not available on share pages', {
@@ -33,7 +70,7 @@ export async function POST(req: Request) {
 
     const cookieStore = await cookies()
     const modelJson = cookieStore.get('selectedModel')?.value
-    const searchMode = cookieStore.get('search-mode')?.value === 'true'
+    const cookieSearchMode = cookieStore.get('search-mode')?.value === 'true'
 
     let selectedModel = DEFAULT_MODEL
 
@@ -65,14 +102,14 @@ export async function POST(req: Request) {
           messages,
           model: selectedModel,
           chatId,
-          searchMode,
+          searchMode: cookieSearchMode,
           userId
         })
       : createManualToolStreamResponse({
           messages,
           model: selectedModel,
           chatId,
-          searchMode,
+          searchMode: cookieSearchMode,
           userId
         })
   } catch (error) {

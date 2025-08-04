@@ -8,11 +8,11 @@ import { getCurrentUserId } from '@/lib/auth/get-current-user'
 import { ChatOptions } from '@/lib/types/ragflow'
 import { NextRequest, NextResponse } from 'next/server'
 
-export const maxDuration = 30
+export const maxDuration = 180
 
 export async function POST(request: NextRequest) {
   try {
-    const { messages, datasetId, sessionId } = await request.json()
+    const { messages, datasetId, sessionId, searchMode = 'single' } = await request.json()
     
     // 檢查是否為分享頁面
     const referer = request.headers.get('referer')
@@ -54,8 +54,33 @@ export async function POST(request: NextRequest) {
       stream: false
     }
 
-    // 執行知識庫搜索
-    const result = await ragflowAgent.chat(messages, options)
+    // 提取最新的用戶消息
+    const lastMessage = messages.filter(m => m.role === 'user').pop()
+    if (!lastMessage) {
+      return NextResponse.json(
+        { error: '沒有找到用戶消息' },
+        { status: 400 }
+      )
+    }
+
+    let result: any
+
+    // 根據搜索模式執行不同的搜索策略
+    switch (searchMode) {
+      case 'multi':
+        // 多知識庫搜索
+        result = await ragflowAgent.multiDatasetSearch(lastMessage.content, options)
+        break
+      case 'intelligent':
+        // 智能選擇知識庫
+        result = await ragflowAgent.search(lastMessage.content, options)
+        break
+      case 'single':
+      default:
+        // 單一知識庫搜索（原有邏輯）
+        result = await ragflowAgent.chat(messages, options)
+        break
+    }
 
     // 格式化回應
     const formattedAnswer = ragflowAgent.formatAnswer(result)
@@ -68,6 +93,7 @@ export async function POST(request: NextRequest) {
       session_id: result.session_id,
       dataset_name: result.dataset_name,
       confidence: result.confidence,
+      search_mode: searchMode,
       mode: 'knowledge',
       timestamp: new Date().toISOString()
     })
