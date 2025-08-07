@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://sevaroy.github.io/Legalmentor/sitemap.xml
+
+# Legal Mentor - AI-Powered Legal Research Assistant
+# Allow all search engines to index our legal research tool

@@ -1,0 +1,74 @@
+# GitHub Pages Configuration for Legal Mentor
+
+# Site settings
+title: "Legal Mentor"
+description: "AI-Powered Legal Research Assistant - A fully open-source AI-powered legal research engine with intelligent analysis."
+baseurl: "/Legalmentor"
+url: "https://sevaroy.github.io"
+
+# Build settings
+markdown: kramdown
+highlighter: rouge
+theme: minima
+
+# Plugins
+plugins:
+  - jekyll-feed
+  - jekyll-sitemap
+  - jekyll-seo-tag
+
+# SEO settings
+author: "Legal Mentor Team"
+twitter:
+  username: legalmentor
+  card: summary_large_image
+
+# Social links
+github_username: sevaroy
+repository: "sevaroy/Legalmentor"
+
+# Legal Mentor specific settings
+legal_mentor:
+  tagline: "AI-Powered Legal Research Assistant"
+  features:
+    - "Contract Analysis"
+    - "Case Law Search" 
+    - "Compliance Check"
+    - "Legal Research"
+    - "AI Analysis"
+    - "Secure & Confidential"
+
+# Exclude from processing
+exclude:
+  - README.md
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor/bundle/
+  - vendor/cache/
+  - vendor/gems/
+  - vendor/ruby/
+
+# Include files
+include:
+  - _pages
+  - assets
+
+# Collections
+collections:
+  pages:
+    output: true
+    permalink: /:name/
+
+# Default layouts
+defaults:
+  - scope:
+      path: ""
+      type: "pages"
+    values:
+      layout: "default"
+  - scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: "post"
