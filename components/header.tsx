@@ -27,8 +27,17 @@ export const Header: React.FC<HeaderProps> = ({ user }) => {
         'w-full'
       )}
     >
-      {/* This div can be used for a logo or title on the left if needed */}
-      <div></div>
+      {/* Product link */}
+      <div className="flex items-center">
+        <Link 
+          href="https://morphic-gq15t1869-sevaroys-projects.vercel.app/" 
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors px-3 py-2 rounded-md hover:bg-muted/50"
+        >
+          產品展示
+        </Link>
+      </div>
 
       <div className="flex items-center gap-2">
         {user ? <UserMenu user={user} /> : <GuestMenu />}

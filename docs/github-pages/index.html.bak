@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Legal Mentor - AI-Powered Legal Research Assistant</title>
+    <meta name="description" content="A fully open-source AI-powered legal research engine with intelligent analysis.">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Legal Mentor - AI-Powered Legal Research Assistant">
+    <meta property="og:description" content="A fully open-source AI-powered legal research engine with intelligent analysis.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://sevaroy.github.io/Legalmentor/">
+    <meta property="og:image" content="https://sevaroy.github.io/Legalmentor/assets/legal-mentor-preview.png">
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Legal Mentor - AI-Powered Legal Research Assistant">
+    <meta name="twitter:description" content="A fully open-source AI-powered legal research engine with intelligent analysis.">
+    <meta name="twitter:image" content="https://sevaroy.github.io/Legalmentor/assets/legal-mentor-preview.png">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="./assets/favicon.ico">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Custom Styles -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            /* 優化渲染性能 */
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            text-rendering: optimizeLegibility;
+            /* 防止不必要的重排 */
+            overflow-x: hidden;
+        }
+        
+        /* 全局性能優化 */
+        * {
+            box-sizing: border-box;
+        }
+        
+        /* 優化圖片和媒體 */
+        img, video, svg {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+        
+        /* 優化滾動性能 */
+        html {
+            scroll-behavior: smooth;
+            /* 在支援的瀏覽器中啟用硬體加速滾動 */
+            -webkit-overflow-scrolling: touch;
+        }
+        
+        /* 減少重繪 */
+        .gradient-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(ellipse at center, rgba(59,130,246,0.1) 0%, transparent 70%);
+            pointer-events: none;
+            will-change: transform;
+            backface-visibility: hidden;
+        }
+        
+        /* 優化的漸變背景 - 使用 GPU 加速 */
+        .gradient-bg {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 25%, #1e40af 75%, #3b82f6 100%);
+            position: relative;
+            will-change: transform;
+            backface-visibility: hidden;
+            transform: translate3d(0, 0, 0); /* 強制 GPU 加速 */
+        }
+        
+        /* 更明顯的法律圖案 */
+        .legal-pattern {
+            background-image: 
+                radial-gradient(circle at 20% 20%, rgba(255,255,255,0.15) 2px, transparent 2px),
+                radial-gradient(circle at 80% 80%, rgba(255,255,255,0.15) 2px, transparent 2px),
+                radial-gradient(circle at 40% 60%, rgba(59,130,246,0.3) 1px, transparent 1px);
+            background-size: 60px 60px, 60px 60px, 30px 30px;
+        }
+        
+
+        
+        .animate-float {
+            animation: float 6s ease-in-out infinite;
+            will-change: transform;
+            backface-visibility: hidden;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translate3d(0, 0, 0) rotate(0deg); }
+            50% { transform: translate3d(0, -20px, 0) rotate(2deg); }
+        }
+        
+        /* 優化的卡片效果 - GPU 加速 */
+        .feature-card {
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+                        box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+                        border-color 0.3s ease;
+            border: 1px solid rgba(59, 130, 246, 0.1);
+            will-change: transform;
+            backface-visibility: hidden;
+            transform: translate3d(0, 0, 0); /* 初始化 GPU 層 */
+        }
+        
+        .feature-card:hover {
+            transform: translate3d(0, -8px, 0) scale3d(1.02, 1.02, 1);
+            box-shadow: 0 25px 50px rgba(30, 64, 175, 0.25);
+            border-color: rgba(59, 130, 246, 0.3);
+        }
+        
+        /* 文字陰影增強可讀性 */
+        .hero-title {
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            font-weight: 800;
+        }
+        
+        .hero-subtitle {
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+            font-weight: 500;
+        }
+        
+        .hero-description {
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+            font-weight: 400;
+        }
+        
+        /* 優化的按鈕效果 - GPU 加速 */
+        .btn-primary {
+            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+            color: #1e40af;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+            will-change: transform;
+            backface-visibility: hidden;
+            transform: translate3d(0, 0, 0);
+        }
+        
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            transform: translate3d(0, -2px, 0);
+            box-shadow: 0 8px 25px rgba(255, 255, 255, 0.3);
+        }
+        
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+            font-weight: 600;
+            border: 2px solid rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(10px);
+            transition: transform 0.2s ease, box-shadow 0.2s ease, 
+                        background 0.2s ease, border-color 0.2s ease;
+            will-change: transform;
+            backface-visibility: hidden;
+            transform: translate3d(0, 0, 0);
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.6);
+            transform: translate3d(0, -2px, 0);
+            box-shadow: 0 8px 25px rgba(255, 255, 255, 0.2);
+        }
+        
+        /* 優化的導航欄 */
+        .nav-link {
+            font-weight: 500;
+            color: #374151;
+            transition: color 0.2s ease, transform 0.2s ease;
+            will-change: transform;
+            backface-visibility: hidden;
+            transform: translate3d(0, 0, 0);
+        }
+        
+        .nav-link:hover {
+            color: #1e40af;
+            transform: translate3d(0, -1px, 0);
+        }
+        
+        /* 功能圖標增強 */
+        .feature-icon {
+            background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+            box-shadow: 0 8px 20px rgba(30, 64, 175, 0.3);
+        }
+        
+        /* 響應式文字大小 */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            .hero-subtitle {
+                font-size: 1.25rem;
+            }
+        }
+        
+        /* 優化的滾動動畫 - 使用 transform3d 啟用 GPU 加速 */
+        .fade-in-up {
+            opacity: 0;
+            transform: translate3d(0, 30px, 0);
+            will-change: opacity, transform;
+        }
+        
+        /* 延遲動畫 - 使用 CSS 自定義屬性 */
+        .delay-100 { transition-delay: 0.1s; }
+        .delay-200 { transition-delay: 0.2s; }
+        .delay-300 { transition-delay: 0.3s; }
+        .delay-400 { transition-delay: 0.4s; }
+        .delay-500 { transition-delay: 0.5s; }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white/95 backdrop-blur-sm shadow-lg border-b border-blue-200 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-gradient-to-br from-blue-600 to-blue-700 rounded-xl flex items-center justify-center shadow-lg">
+                        <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2v20M8 6h8M6 10c0 2 2 4 4 4s4-2 4-4M14 10c0 2 2 4 4 4s4-2 4-4"/>
+                            <circle cx="8" cy="10" r="2"/>
+                            <circle cx="16" cy="10" r="2"/>
+                            <path d="M12 2l2 2-2 2-2-2z" fill="currentColor"/>
+                        </svg>
+                    </div>
+                    <span class="text-xl font-bold text-gray-900">Legal Mentor</span>
+                </div>
+                <div class="flex items-center space-x-6">
+                    <a href="#features" class="nav-link">功能</a>
+                    <a href="#demo" class="nav-link">演示</a>
+                    <a href="./presentation.html" class="nav-link">簡報</a>
+                    <a href="https://github.com/sevaroy/Legalmentor" target="_blank" class="bg-gradient-to-r from-blue-600 to-blue-700 text-white px-6 py-2 rounded-lg hover:from-blue-700 hover:to-blue-800 transition-all duration-300 transform hover:scale-105 shadow-lg">
+                        GitHub
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="gradient-bg legal-pattern min-h-screen flex items-center justify-center text-white relative overflow-hidden">
+        <div class="max-w-5xl mx-auto text-center px-4 relative z-10">
+            <div class="animate-float mb-12 fade-in-up">
+                <div class="w-32 h-32 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-8 backdrop-blur-sm border border-white/30 shadow-2xl">
+                    <svg class="w-16 h-16 text-white" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 2v20M8 6h8M6 10c0 2 2 4 4 4s4-2 4-4M14 10c0 2 2 4 4 4s4-2 4-4"/>
+                        <circle cx="8" cy="10" r="2"/>
+                        <circle cx="16" cy="10" r="2"/>
+                        <path d="M12 2l2 2-2 2-2-2z" fill="currentColor"/>
+                    </svg>
+                </div>
+            </div>
+            
+            <h1 class="hero-title text-6xl md:text-7xl lg:text-8xl mb-8 fade-in-up delay-100">
+                Legal Mentor
+            </h1>
+            <p class="hero-subtitle text-2xl md:text-3xl mb-8 fade-in-up delay-200">
+                AI-Powered Legal Research Assistant
+            </p>
+            <p class="hero-description text-xl md:text-2xl mb-16 max-w-4xl mx-auto leading-relaxed fade-in-up delay-300">
+                A fully open-source AI-powered legal research engine with intelligent analysis.<br>
+                <span class="text-blue-200 font-medium">Professional-grade legal research tools powered by advanced AI technology.</span>
+            </p>
+            
+            <div class="flex flex-col sm:flex-row gap-6 justify-center items-center fade-in-up delay-400">
+                <a href="#demo" class="btn-primary px-10 py-4 rounded-xl font-semibold text-lg transition-all duration-300 transform hover:scale-105">
+                    🚀 立即體驗
+                </a>
+                <a href="./presentation.html" class="btn-secondary px-10 py-4 rounded-xl font-semibold text-lg transition-all duration-300 transform hover:scale-105">
+                    📊 查看簡報
+                </a>
+                <a href="https://github.com/sevaroy/Legalmentor" target="_blank" class="btn-secondary px-10 py-4 rounded-xl font-semibold text-lg transition-all duration-300 transform hover:scale-105">
+                    💻 查看源碼
+                </a>
+            </div>
+            
+            <!-- 添加特色標籤 -->
+            <div class="flex flex-wrap justify-center gap-4 mt-12 fade-in-up delay-500">
+                <div class="bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full border border-white/20">
+                    <span class="text-white font-medium">⚖️ 法律專業</span>
+                </div>
+                <div class="bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full border border-white/20">
+                    <span class="text-white font-medium">🤖 AI 驅動</span>
+                </div>
+                <div class="bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full border border-white/20">
+                    <span class="text-white font-medium">🔓 開源免費</span>
+                </div>
+                <div class="bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full border border-white/20">
+                    <span class="text-white font-medium">🔒 安全保密</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 背景裝飾元素 -->
+        <div class="absolute top-20 left-10 w-20 h-20 bg-white/5 rounded-full blur-xl"></div>
+        <div class="absolute bottom-20 right-10 w-32 h-32 bg-blue-400/10 rounded-full blur-2xl"></div>
+        <div class="absolute top-1/2 left-1/4 w-16 h-16 bg-white/5 rounded-full blur-lg"></div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-24 bg-gradient-to-br from-gray-50 to-blue-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-20">
+                <h2 class="text-5xl font-bold text-gray-900 mb-6">專業法律研究功能</h2>
+                <p class="text-2xl text-gray-700 max-w-3xl mx-auto leading-relaxed">
+                    提供全面的法律研究工具，支持合約分析、案例法搜索、法規遵循等專業功能
+                </p>
+                <div class="w-24 h-1 bg-gradient-to-r from-blue-600 to-blue-400 mx-auto mt-8 rounded-full"></div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Contract Analysis -->
+                <div class="feature-card bg-white p-8 rounded-2xl shadow-lg">
+                    <div class="feature-icon w-16 h-16 rounded-xl flex items-center justify-center mb-6">
+                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-4">合約分析</h3>
+                    <p class="text-gray-700 text-lg leading-relaxed">
+                        智能分析合約條款，識別潛在風險，提供專業建議和標準條款比較
+                    </p>
+                </div>
+                
+                <!-- Case Law Search -->
+                <div class="feature-card bg-white p-8 rounded-2xl shadow-lg">
+                    <div class="feature-icon w-16 h-16 rounded-xl flex items-center justify-center mb-6">
+                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-4">案例法搜索</h3>
+                    <p class="text-gray-700 text-lg leading-relaxed">
+                        快速搜索相關判例，提供詳細的案例分析和法律先例參考
+                    </p>
+                </div>
+                
+                <!-- Compliance Check -->
+                <div class="feature-card bg-white p-8 rounded-2xl shadow-lg">
+                    <div class="feature-icon w-16 h-16 rounded-xl flex items-center justify-center mb-6">
+                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-4">法規遵循</h3>
+                    <p class="text-gray-700 text-lg leading-relaxed">
+                        檢查文件和流程的法規遵循性，確保符合最新的法律要求
+                    </p>
+                </div>
+                
+                <!-- Legal Research -->
+                <div class="feature-card bg-white p-8 rounded-2xl shadow-lg">
+                    <div class="feature-icon w-16 h-16 rounded-xl flex items-center justify-center mb-6">
+                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-4">法律研究</h3>
+                    <p class="text-gray-700 text-lg leading-relaxed">
+                        全面的法律資料庫搜索，提供準確的法條引用和專業解釋
+                    </p>
+                </div>
+                
+                <!-- AI Analysis -->
+                <div class="feature-card bg-white p-8 rounded-2xl shadow-lg">
+                    <div class="feature-icon w-16 h-16 rounded-xl flex items-center justify-center mb-6">
+                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-4">AI 智能分析</h3>
+                    <p class="text-gray-700 text-lg leading-relaxed">
+                        運用先進的 AI 技術，提供深度的法律文件分析和風險評估
+                    </p>
+                </div>
+                
+                <!-- Secure & Confidential -->
+                <div class="feature-card bg-white p-8 rounded-2xl shadow-lg">
+                    <div class="feature-icon w-16 h-16 rounded-xl flex items-center justify-center mb-6">
+                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-4">安全保密</h3>
+                    <p class="text-gray-700 text-lg leading-relaxed">
+                        遵循律師-客戶特權保護，確保所有法律研究過程的機密性
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Demo Section -->
+    <section id="demo" class="py-24 bg-gradient-to-br from-blue-900 to-indigo-900 text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-20">
+                <h2 class="text-5xl font-bold mb-6">立即體驗 Legal Mentor</h2>
+                <p class="text-2xl text-blue-100 max-w-3xl mx-auto leading-relaxed">
+                    點擊下方按鈕，體驗專業級的 AI 法律研究助手
+                </p>
+                <div class="w-24 h-1 bg-gradient-to-r from-blue-400 to-blue-200 mx-auto mt-8 rounded-full"></div>
+            </div>
+            
+            <div class="bg-white/10 backdrop-blur-lg rounded-3xl shadow-2xl p-12 max-w-5xl mx-auto border border-white/20">
+                <div class="text-center">
+                    <div class="w-24 h-24 bg-gradient-to-br from-blue-400 to-blue-600 rounded-full flex items-center justify-center mx-auto mb-8 shadow-2xl">
+                        <svg class="w-12 h-12 text-white" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2v20M8 6h8M6 10c0 2 2 4 4 4s4-2 4-4M14 10c0 2 2 4 4 4s4-2 4-4"/>
+                            <circle cx="8" cy="10" r="2"/>
+                            <circle cx="16" cy="10" r="2"/>
+                            <path d="M12 2l2 2-2 2-2-2z" fill="currentColor"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-3xl font-bold mb-6">準備好開始法律研究了嗎？</h3>
+                    <p class="text-xl text-blue-100 mb-12 max-w-3xl mx-auto leading-relaxed">
+                        Legal Mentor 提供專業級的 AI 法律研究工具，幫助您快速找到所需的法律信息。<br>
+                        <span class="text-white font-medium">現在就開始您的智能法律研究之旅！</span>
+                    </p>
+                    <a href="https://legalmentor.vercel.app" target="_blank" class="inline-flex items-center bg-gradient-to-r from-white to-blue-50 text-blue-900 px-12 py-5 rounded-xl font-bold text-xl hover:from-blue-50 hover:to-white transition-all duration-300 transform hover:scale-105 shadow-2xl">
+                        <svg class="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+                        </svg>
+                        🚀 立即使用 Legal Mentor
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gradient-to-br from-gray-900 to-black text-white py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+                <div>
+                    <div class="flex items-center space-x-3 mb-6">
+                        <div class="w-12 h-12 bg-gradient-to-br from-blue-600 to-blue-700 rounded-xl flex items-center justify-center shadow-lg">
+                            <svg class="w-7 h-7 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 2v20M8 6h8M6 10c0 2 2 4 4 4s4-2 4-4M14 10c0 2 2 4 4 4s4-2 4-4"/>
+                                <circle cx="8" cy="10" r="2"/>
+                                <circle cx="16" cy="10" r="2"/>
+                                <path d="M12 2l2 2-2 2-2-2z" fill="currentColor"/>
+                            </svg>
+                        </div>
+                        <span class="text-2xl font-bold">Legal Mentor</span>
+                    </div>
+                    <p class="text-gray-300 text-lg leading-relaxed">
+                        AI-Powered Legal Research Assistant<br>
+                        <span class="text-blue-400 font-medium">專業級法律研究工具</span>
+                    </p>
+                </div>
+                
+                <div>
+                    <h4 class="text-xl font-bold mb-6 text-blue-400">核心功能</h4>
+                    <ul class="space-y-3 text-gray-300">
+                        <li class="flex items-center">
+                            <span class="w-2 h-2 bg-blue-500 rounded-full mr-3"></span>
+                            合約分析
+                        </li>
+                        <li class="flex items-center">
+                            <span class="w-2 h-2 bg-blue-500 rounded-full mr-3"></span>
+                            案例法搜索
+                        </li>
+                        <li class="flex items-center">
+                            <span class="w-2 h-2 bg-blue-500 rounded-full mr-3"></span>
+                            法規遵循檢查
+                        </li>
+                        <li class="flex items-center">
+                            <span class="w-2 h-2 bg-blue-500 rounded-full mr-3"></span>
+                            AI 智能分析
+                        </li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-xl font-bold mb-6 text-blue-400">快速連結</h4>
+                    <ul class="space-y-3 text-gray-300">
+                        <li>
+                            <a href="https://github.com/sevaroy/Legalmentor" target="_blank" class="flex items-center hover:text-blue-400 transition-colors">
+                                <svg class="w-5 h-5 mr-3" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                                </svg>
+                                GitHub 源碼
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://legalmentor.vercel.app" target="_blank" class="flex items-center hover:text-blue-400 transition-colors">
+                                <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+                                </svg>
+                                在線演示
+                            </a>
+                        </li>
+                        <li>
+                            <a href="./presentation.html" class="flex items-center hover:text-blue-400 transition-colors">
+                                <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                                </svg>
+                                項目簡報
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-700 mt-12 pt-8 text-center">
+                <p class="text-gray-400 text-lg">
+                    &copy; 2025 Legal Mentor. 
+                    <span class="text-blue-400 font-medium">Open Source Legal Research Assistant</span>
+                </p>
+                <p class="text-gray-500 mt-2">
+                    Built with ❤️ for the legal community
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Optimized Performance Scripts -->
+    <script>
+        // Performance optimized smooth scrolling
+        function smoothScrollTo(target) {
+            const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - 80;
+            const startPosition = window.pageYOffset;
+            const distance = targetPosition - startPosition;
+            const duration = 800;
+            let start = null;
+
+            function animation(currentTime) {
+                if (start === null) start = currentTime;
+                const timeElapsed = currentTime - start;
+                const run = easeInOutQuad(timeElapsed, startPosition, distance, duration);
+                window.scrollTo(0, run);
+                if (timeElapsed < duration) requestAnimationFrame(animation);
+            }
+
+            function easeInOutQuad(t, b, c, d) {
+                t /= d / 2;
+                if (t < 1) return c / 2 * t * t + b;
+                t--;
+                return -c / 2 * (t * (t - 2) - 1) + b;
+            }
+
+            requestAnimationFrame(animation);
+        }
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    smoothScrollTo(target);
+                }
+            });
+        });
+
+        // Optimized Intersection Observer for fade-in animations
+        const observerOptions = {
+            threshold: [0, 0.1, 0.2],
+            rootMargin: '0px 0px -10% 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-in');
+                    observer.unobserve(entry.target); // Stop observing once animated
+                }
+            });
+        }, observerOptions);
+
+        // Throttle function for performance
+        function throttle(func, limit) {
+            let inThrottle;
+            return function() {
+                const args = arguments;
+                const context = this;
+                if (!inThrottle) {
+                    func.apply(context, args);
+                    inThrottle = true;
+                    setTimeout(() => inThrottle = false, limit);
+                }
+            }
+        }
+
+        // Optimized parallax with requestAnimationFrame
+        let ticking = false;
+        let scrollY = 0;
+
+        function updateParallax() {
+            const parallax = document.querySelector('.gradient-bg');
+            if (parallax) {
+                const speed = scrollY * 0.3; // Reduced speed for smoother effect
+                parallax.style.transform = `translate3d(0, ${speed}px, 0)`; // Use translate3d for GPU acceleration
+            }
+            ticking = false;
+        }
+
+        function requestTick() {
+            if (!ticking) {
+                requestAnimationFrame(updateParallax);
+                ticking = true;
+            }
+        }
+
+        // Throttled scroll event
+        const handleScroll = throttle(() => {
+            scrollY = window.pageYOffset;
+            requestTick();
+        }, 16); // ~60fps
+
+        // Add scroll listener with passive option for better performance
+        window.addEventListener('scroll', handleScroll, { passive: true });
+
+        // Optimized typing effect with requestAnimationFrame
+        function typeWriter(element, text, speed = 100) {
+            let i = 0;
+            element.innerHTML = '';
+            
+            function type() {
+                if (i < text.length) {
+                    element.innerHTML += text.charAt(i);
+                    i++;
+                    setTimeout(type, speed);
+                } else {
+                    element.classList.add('typing-complete');
+                }
+            }
+            type();
+        }
+
+        // Initialize animations when DOM is ready
+        document.addEventListener('DOMContentLoaded', () => {
+            // Observe fade-in elements
+            const fadeElements = document.querySelectorAll('.fade-in-up');
+            fadeElements.forEach(el => observer.observe(el));
+
+            // Add CSS for smooth animations
+            const style = document.createElement('style');
+            style.textContent = `
+                .fade-in-up {
+                    opacity: 0;
+                    transform: translate3d(0, 30px, 0);
+                    transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1), 
+                                transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+                }
+                .animate-in {
+                    opacity: 1 !important;
+                    transform: translate3d(0, 0, 0) !important;
+                }
+                .typing-complete {
+                    border-right: 2px solid transparent;
+                    animation: blink 1s infinite;
+                }
+                @keyframes blink {
+                    0%, 50% { border-right-color: currentColor; }
+                    51%, 100% { border-right-color: transparent; }
+                }
+                
+                /* GPU acceleration for all animated elements */
+                .feature-card, .btn-primary, .btn-secondary, .nav-link {
+                    will-change: transform;
+                    backface-visibility: hidden;
+                    perspective: 1000px;
+                }
+                
+                /* Optimize hover effects */
+                .feature-card:hover {
+                    transform: translate3d(0, -8px, 0) scale3d(1.02, 1.02, 1);
+                }
+                
+                .btn-primary:hover, .btn-secondary:hover {
+                    transform: translate3d(0, -2px, 0);
+                }
+                
+                /* Smooth scrolling for the entire page */
+                html {
+                    scroll-behavior: smooth;
+                }
+                
+                /* Reduce motion for users who prefer it */
+                @media (prefers-reduced-motion: reduce) {
+                    *, *::before, *::after {
+                        animation-duration: 0.01ms !important;
+                        animation-iteration-count: 1 !important;
+                        transition-duration: 0.01ms !important;
+                    }
+                    html {
+                        scroll-behavior: auto;
+                    }
+                }
+            `;
+            document.head.appendChild(style);
+        });
+
+        // Initialize typing effect when page loads
+        window.addEventListener('load', () => {
+            const heroTitle = document.querySelector('.hero-title');
+            if (heroTitle) {
+                const originalText = heroTitle.textContent;
+                // Delay typing effect to avoid blocking initial render
+                setTimeout(() => {
+                    typeWriter(heroTitle, originalText, 120);
+                }, 500);
+            }
+        });
+
+        // Preload critical resources
+        const preloadLinks = [
+            'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap',
+            'https://cdn.tailwindcss.com'
+        ];
+
+        preloadLinks.forEach(href => {
+            const link = document.createElement('link');
+            link.rel = 'preload';
+            link.as = 'style';
+            link.href = href;
+            document.head.appendChild(link);
+        });
+
+        // Performance monitoring (optional)
+        if ('performance' in window) {
+            window.addEventListener('load', () => {
+                setTimeout(() => {
+                    const perfData = performance.getEntriesByType('navigation')[0];
+                    console.log('Page Load Time:', perfData.loadEventEnd - perfData.loadEventStart, 'ms');
+                }, 0);
+            });
+        }
+    </script>
+</body>
+</html>
