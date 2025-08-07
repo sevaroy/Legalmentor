@@ -9,8 +9,8 @@ import { cn } from '@/lib/utils'
 import { SidebarProvider } from '@/components/ui/sidebar'
 import { Toaster } from '@/components/ui/sonner'
 
-import AppSidebar from '@/components/app-sidebar'
 import ArtifactRoot from '@/components/artifact/artifact-root'
+import BrandAwareSidebar from '@/components/brand-aware-sidebar'
 import Header from '@/components/header'
 import { ThemeProvider } from '@/components/theme-provider'
 
@@ -21,12 +21,14 @@ const fontSans = FontSans({
   variable: '--font-sans'
 })
 
-const title = 'Morphic'
-const description =
-  'A fully open-source AI-powered answer engine with a generative UI.'
+import { getBrandInfo } from '@/lib/branding/config'
+
+const brandInfo = getBrandInfo()
+const title = brandInfo.name
+const description = brandInfo.description
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://morphic.sh'),
+  metadataBase: new URL(brandInfo.url),
   title,
   description,
   openGraph: {
@@ -37,7 +39,7 @@ export const metadata: Metadata = {
     title,
     description,
     card: 'summary_large_image',
-    creator: '@miiura'
+    creator: brandInfo.social.twitter
   }
 }
 
@@ -80,7 +82,7 @@ export default async function RootLayout({
           disableTransitionOnChange
         >
           <SidebarProvider defaultOpen>
-            <AppSidebar />
+            <BrandAwareSidebar />
             <div className="flex flex-col flex-1">
               <Header user={user} />
               <main className="flex flex-1 min-h-0">

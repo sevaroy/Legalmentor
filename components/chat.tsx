@@ -11,8 +11,8 @@ import { CHAT_ID } from '@/lib/constants'
 import { Model } from '@/lib/types/models'
 import { cn } from '@/lib/utils'
 
+import BrandAwareChatPanel from './brand-aware-chat-panel'
 import { ChatMessages } from './chat-messages'
-import { ChatPanel } from './chat-panel'
 
 // Define section structure
 interface ChatSection {
@@ -221,7 +221,7 @@ export function Chat({
         onUpdateMessage={handleUpdateAndReloadMessage}
         reload={handleReloadFrom}
       />
-      <ChatPanel
+      <BrandAwareChatPanel
         input={input}
         handleInputChange={handleInputChange}
         handleSubmit={onSubmit}
