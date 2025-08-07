@@ -9,7 +9,7 @@ import {
     SidebarRail,
     SidebarTrigger
 } from '@/components/ui/sidebar'
-import { cn } from '@/lib/utils'
+import { cn } from '@/lib/utils/index'
 import { History, Plus, Settings, Sparkles } from 'lucide-react'
 import Link from 'next/link'
 import { Suspense } from 'react'

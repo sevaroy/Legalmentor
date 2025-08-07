@@ -3,23 +3,23 @@
 import React from 'react'
 
 import {
-  BookCheck,
-  Check,
-  File,
-  Film,
-  Image,
-  MessageCircleMore,
-  Newspaper,
-  Repeat2,
-  Search
+    BookCheck,
+    Check,
+    File,
+    Film,
+    Image,
+    MessageCircleMore,
+    Newspaper,
+    Repeat2,
+    Search
 } from 'lucide-react'
 
-import { cn } from '@/lib/utils'
+import { cn } from '@/lib/utils/index'
 
+import { ToolBadge } from './tool-badge'
 import { Badge } from './ui/badge'
 import { Separator } from './ui/separator'
 import { StatusIndicator } from './ui/status-indicator'
-import { ToolBadge } from './tool-badge'
 
 type SectionProps = {
   children: React.ReactNode

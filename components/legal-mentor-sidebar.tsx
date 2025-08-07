@@ -10,7 +10,7 @@ import {
     SidebarTrigger
 } from '@/components/ui/sidebar'
 import { useBrandConfig } from '@/lib/branding/config'
-import { cn } from '@/lib/utils'
+import { cn } from '@/lib/utils/index'
 import { BookOpen, FileText, Plus, Scale, Search, Shield } from 'lucide-react'
 import Link from 'next/link'
 import { Suspense } from 'react'

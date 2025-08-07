@@ -4,8 +4,8 @@ import { useEffect, useState } from 'react'
 
 import { Globe } from 'lucide-react'
 
-import { cn } from '@/lib/utils'
 import { getCookie, setCookie } from '@/lib/utils/cookies'
+import { cn } from '@/lib/utils/index'
 
 import { Toggle } from './ui/toggle'
 

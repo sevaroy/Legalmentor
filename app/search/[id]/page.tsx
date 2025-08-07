@@ -3,8 +3,8 @@ import { notFound, redirect } from 'next/navigation'
 import { getChat } from '@/lib/actions/chat'
 import { getCurrentUserId } from '@/lib/auth/get-current-user'
 import { getModels } from '@/lib/config/models'
-import { ExtendedCoreMessage, SearchResults } from '@/lib/types' // Added SearchResults
-import { convertToUIMessages } from '@/lib/utils'
+import { ExtendedCoreMessage, SearchResults } from '@/lib/types'; // Added SearchResults
+import { convertToUIMessages } from '@/lib/utils/index'
 
 import { Chat } from '@/components/chat'
 

@@ -3,12 +3,12 @@
 import React, { useEffect, useState } from 'react'
 
 import { useMediaQuery } from '@/lib/hooks/use-media-query'
-import { cn } from '@/lib/utils'
+import { cn } from '@/lib/utils/index'
 
 import {
-  ResizableHandle,
-  ResizablePanel,
-  ResizablePanelGroup
+    ResizableHandle,
+    ResizablePanel,
+    ResizablePanelGroup
 } from '@/components/ui/resizable'
 import { SidebarTrigger, useSidebar } from '@/components/ui/sidebar'
 

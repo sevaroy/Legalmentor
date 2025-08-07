@@ -9,7 +9,7 @@ import { toast } from 'sonner'
 
 import { CHAT_ID } from '@/lib/constants'
 import { Model } from '@/lib/types/models'
-import { cn } from '@/lib/utils'
+import { cn } from '@/lib/utils/index'
 
 import BrandAwareChatPanel from './brand-aware-chat-panel'
 import { ChatMessages } from './chat-messages'

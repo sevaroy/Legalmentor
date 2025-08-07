@@ -5,10 +5,10 @@ import TextareaAutosize from 'react-textarea-autosize'
 
 import { Pencil } from 'lucide-react'
 
-import { cn } from '@/lib/utils'
+import { cn } from '@/lib/utils/index'
 
-import { Button } from './ui/button'
 import { CollapsibleMessage } from './collapsible-message'
+import { Button } from './ui/button'
 
 type UserMessageProps = {
   message: string

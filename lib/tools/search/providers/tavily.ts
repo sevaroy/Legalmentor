@@ -1,5 +1,5 @@
 import { SearchResultImage, SearchResults } from '@/lib/types'
-import { sanitizeUrl } from '@/lib/utils'
+import { sanitizeUrl } from '@/lib/utils/index'
 
 import { BaseSearchProvider } from './base'
 

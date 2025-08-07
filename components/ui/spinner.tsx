@@ -1,6 +1,6 @@
 // Based on: https://github.com/vercel/ai/blob/main/examples/next-ai-rsc/components/llm-stocks/spinner.tsx
 
-import { cn } from '@/lib/utils'
+import { cn } from '@/lib/utils/index'
 
 import { IconLogo } from './icons'
 

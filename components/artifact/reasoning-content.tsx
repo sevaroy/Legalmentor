@@ -2,7 +2,7 @@
 
 import remarkGfm from 'remark-gfm'
 
-import { cn } from '@/lib/utils'
+import { cn } from '@/lib/utils/index'
 
 import { MemoizedReactMarkdown } from '../ui/markdown'
 

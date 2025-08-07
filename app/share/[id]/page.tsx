@@ -2,7 +2,7 @@ import { notFound } from 'next/navigation'
 
 import { getSharedChat } from '@/lib/actions/chat'
 import { getModels } from '@/lib/config/models'
-import { convertToUIMessages } from '@/lib/utils'
+import { convertToUIMessages } from '@/lib/utils/index'
 
 import { Chat } from '@/components/chat'
 

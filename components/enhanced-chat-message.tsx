@@ -1,6 +1,6 @@
 'use client'
 
-import { cn } from '@/lib/utils'
+import { cn } from '@/lib/utils/index'
 import { Message } from 'ai/react'
 import { AnimatedMessageBubble, TypingAnimation } from './animations'
 

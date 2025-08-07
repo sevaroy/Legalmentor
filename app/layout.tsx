@@ -4,7 +4,7 @@ import { Inter as FontSans } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 
 import { createClient } from '@/lib/supabase/server'
-import { cn } from '@/lib/utils'
+import { cn } from '@/lib/utils/index'
 
 import { SidebarProvider } from '@/components/ui/sidebar'
 import { Toaster } from '@/components/ui/sonner'

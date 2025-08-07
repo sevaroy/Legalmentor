@@ -1,7 +1,7 @@
 'use client'
 
 import { Model } from '@/lib/types/models'
-import { cn } from '@/lib/utils'
+import { cn } from '@/lib/utils/index'
 import { Message } from 'ai'
 import { ArrowUp, ChevronDown, MessageCirclePlus, Sparkles, Square } from 'lucide-react'
 import { useRouter } from 'next/navigation'
