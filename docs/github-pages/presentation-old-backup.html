@@ -1,0 +1,1150 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Legal Mentor - 專業項目簡報 | AI 法律研究革命</title>
+    <meta name="description" content="Legal Mentor 專業簡報 - 重新定義 AI 法律研究的未來">
+    
+    <!-- Reveal.js -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reveal.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/theme/black.css">
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns"></script>
+    
+    <!-- Animate.css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Custom Styles -->
+    <style>
+        :root {
+            --primary-blue: #1e40af;
+            --secondary-blue: #3b82f6;
+            --accent-blue: #60a5fa;
+            --dark-bg: #0f172a;
+            --darker-bg: #020617;
+            --text-light: #f8fafc;
+            --text-muted: #cbd5e1;
+            --success-green: #10b981;
+            --warning-orange: #f59e0b;
+            --error-red: #ef4444;
+            --gradient-primary: linear-gradient(135deg, #1e40af 0%, #3b82f6 50%, #60a5fa 100%);
+            --gradient-dark: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+        }
+        
+        .reveal {
+            font-family: 'Inter', sans-serif;
+            background: var(--darker-bg);
+        }
+        
+        .reveal .slides {
+            text-align: left;
+        }
+        
+        .reveal .slides section {
+            height: 100vh;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .reveal h1, .reveal h2, .reveal h3 {
+            color: var(--text-light);
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 2rem;
+        }
+        
+        .reveal h1 {
+            font-size: 4rem;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }        
+
+        .reveal h2 {
+            font-size: 3rem;
+            color: var(--accent-blue);
+        }
+        
+        .reveal h3 {
+            font-size: 2rem;
+            color: var(--secondary-blue);
+        }
+        
+        .reveal p {
+            color: var(--text-muted);
+            font-size: 1.25rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+        
+        /* 全屏背景樣式 */
+        .slide-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+        
+        .slide-bg-gradient {
+            background: var(--gradient-dark);
+        }
+        
+        .slide-bg-primary {
+            background: var(--gradient-primary);
+        }
+        
+        .slide-bg-pattern {
+            background: var(--dark-bg);
+            background-image: 
+                radial-gradient(circle at 25% 25%, rgba(59, 130, 246, 0.1) 2px, transparent 2px),
+                radial-gradient(circle at 75% 75%, rgba(59, 130, 246, 0.1) 2px, transparent 2px);
+            background-size: 60px 60px;
+        }
+        
+        /* 內容容器 */
+        .slide-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem;
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* 標題頁樣式 */
+        .title-slide {
+            text-align: center;
+            color: white;
+        }
+        
+        .title-slide .logo {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 3rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(20px);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            animation: float 6s ease-in-out infinite;
+        }       
+ 
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+        }
+        
+        .title-slide .subtitle {
+            font-size: 1.5rem;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 3rem;
+        }
+        
+        .title-slide .tags {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        .tag {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        /* 功能卡片 */
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .feature-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 2rem;
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            backdrop-filter: blur(20px);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--gradient-primary);
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(30, 64, 175, 0.3);
+            border-color: var(--secondary-blue);
+        }
+        
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--gradient-primary);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 10px 30px rgba(30, 64, 175, 0.4);
+        } 
+       
+        .feature-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-light);
+            margin-bottom: 1rem;
+        }
+        
+        .feature-desc {
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+        
+        /* 技術棧展示 */
+        .tech-stack {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .tech-category {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 15px;
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .tech-category h4 {
+            color: var(--accent-blue);
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .tech-item {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 1rem;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            border-left: 3px solid var(--secondary-blue);
+            transition: all 0.3s ease;
+        }
+        
+        .tech-item:hover {
+            background: rgba(59, 130, 246, 0.1);
+            transform: translateX(10px);
+        }
+        
+        .tech-name {
+            font-weight: 600;
+            color: var(--text-light);
+            margin-bottom: 0.25rem;
+        }
+        
+        .tech-desc {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+        
+        /* 數據展示 */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }    
+    
+        .metric-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .metric-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--gradient-primary);
+            opacity: 0.05;
+            z-index: -1;
+        }
+        
+        .metric-value {
+            font-size: 3rem;
+            font-weight: 900;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+        
+        .metric-label {
+            color: var(--text-muted);
+            font-weight: 500;
+            margin-bottom: 1rem;
+        }
+        
+        .metric-progress {
+            width: 100%;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+        
+        .metric-progress-fill {
+            height: 100%;
+            background: var(--gradient-primary);
+            border-radius: 3px;
+            transition: width 2s ease-in-out;
+        }
+        
+        /* 路線圖 */
+        .roadmap {
+            position: relative;
+            padding-left: 3rem;
+        }
+        
+        .roadmap::before {
+            content: '';
+            position: absolute;
+            left: 1rem;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--gradient-primary);
+        }        
+
+        .roadmap-item {
+            position: relative;
+            margin-bottom: 3rem;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 15px;
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .roadmap-item::before {
+            content: '';
+            position: absolute;
+            left: -2.5rem;
+            top: 2rem;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--gradient-primary);
+            border: 3px solid var(--darker-bg);
+        }
+        
+        .roadmap-phase {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--accent-blue);
+            margin-bottom: 0.5rem;
+        }
+        
+        .roadmap-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-light);
+            margin-bottom: 1rem;
+        }
+        
+        .roadmap-desc {
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+        
+        .roadmap-date {
+            position: absolute;
+            right: 2rem;
+            top: 2rem;
+            background: rgba(59, 130, 246, 0.2);
+            color: var(--accent-blue);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+        
+        /* 動畫效果 */
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s ease;
+        }
+        
+        .animate-on-scroll.animated {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* 響應式設計 */
+        @media (max-width: 768px) {
+            .slide-content {
+                padding: 2rem;
+            }
+            
+            .reveal h1 {
+                font-size: 2.5rem;
+            }
+            
+            .reveal h2 {
+                font-size: 2rem;
+            }
+            
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .tech-stack {
+                grid-template-columns: 1fr;
+            }
+            
+            .metrics-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }       
+ 
+        /* 自定義控制項 */
+        .reveal .controls {
+            color: var(--secondary-blue);
+        }
+        
+        .reveal .progress {
+            color: var(--secondary-blue);
+        }
+        
+        /* 代碼塊樣式 */
+        .code-block {
+            background: #1e293b;
+            border-radius: 10px;
+            padding: 1.5rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            color: #e2e8f0;
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            margin: 1rem 0;
+        }
+        
+        /* 特殊效果 */
+        .glow-effect {
+            box-shadow: 0 0 30px rgba(59, 130, 246, 0.3);
+        }
+        
+        .pulse-animation {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+    </style>
+</head>
+<body>
+    <div class="reveal">
+        <div class="slides">
+            
+            <!-- Slide 1: 震撼開場 -->
+            <section>
+                <div class="slide-bg slide-bg-primary"></div>
+                <div class="slide-content title-slide">
+                    <div class="logo animate__animated animate__bounceIn">
+                        <svg width="60" height="60" fill="white" viewBox="0 0 24 24">
+                            <path d="M12 2v20M8 6h8M6 10c0 2 2 4 4 4s4-2 4-4M14 10c0 2 2 4 4 4s4-2 4-4"/>
+                            <circle cx="8" cy="10" r="2"/>
+                            <circle cx="16" cy="10" r="2"/>
+                            <path d="M12 2l2 2-2 2-2-2z" fill="white"/>
+                        </svg>
+                    </div>
+                    <h1 class="animate__animated animate__fadeInUp animate__delay-1s">Legal Mentor</h1>
+                    <p class="subtitle animate__animated animate__fadeInUp animate__delay-2s">
+                        重新定義 AI 法律研究的未來
+                    </p>
+                    <div class="tags animate__animated animate__fadeInUp animate__delay-3s">
+                        <span class="tag">🤖 AI 驅動</span>
+                        <span class="tag">⚖️ 法律專業</span>
+                        <span class="tag">🔓 開源免費</span>
+                        <span class="tag">🚀 革命性創新</span>
+                    </div>
+                </div>
+            </section>
+       
+     <!-- Slide 2: 問題陳述 - 戲劇化對比 -->
+            <section>
+                <div class="slide-bg slide-bg-pattern"></div>
+                <div class="slide-content">
+                    <h2>⚡ 法律研究的痛點時代即將結束</h2>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; margin-top: 3rem;">
+                        <div>
+                            <h3 style="color: #ef4444; margin-bottom: 2rem;">😤 傳統方式的困境</h3>
+                            <div style="space-y: 1.5rem;">
+                                <div style="display: flex; align-items: center; margin-bottom: 1.5rem; padding: 1rem; background: rgba(239, 68, 68, 0.1); border-radius: 10px; border-left: 4px solid #ef4444;">
+                                    <span style="font-size: 2rem; margin-right: 1rem;">⏰</span>
+                                    <div>
+                                        <div style="font-weight: 600; color: #f8fafc;">耗時費力</div>
+                                        <div style="color: #cbd5e1; font-size: 0.9rem;">平均每個案例需要 8-12 小時研究</div>
+                                    </div>
+                                </div>
+                                <div style="display: flex; align-items: center; margin-bottom: 1.5rem; padding: 1rem; background: rgba(239, 68, 68, 0.1); border-radius: 10px; border-left: 4px solid #ef4444;">
+                                    <span style="font-size: 2rem; margin-right: 1rem;">💸</span>
+                                    <div>
+                                        <div style="font-weight: 600; color: #f8fafc;">成本高昂</div>
+                                        <div style="color: #cbd5e1; font-size: 0.9rem;">每小時研究成本 $200-500</div>
+                                    </div>
+                                </div>
+                                <div style="display: flex; align-items: center; margin-bottom: 1.5rem; padding: 1rem; background: rgba(239, 68, 68, 0.1); border-radius: 10px; border-left: 4px solid #ef4444;">
+                                    <span style="font-size: 2rem; margin-right: 1rem;">❌</span>
+                                    <div>
+                                        <div style="font-weight: 600; color: #f8fafc;">錯誤率高</div>
+                                        <div style="color: #cbd5e1; font-size: 0.9rem;">人工研究錯誤率達 15-20%</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <h3 style="color: #10b981; margin-bottom: 2rem;">🚀 Legal Mentor 革命</h3>
+                            <div style="space-y: 1.5rem;">
+                                <div style="display: flex; align-items: center; margin-bottom: 1.5rem; padding: 1rem; background: rgba(16, 185, 129, 0.1); border-radius: 10px; border-left: 4px solid #10b981;">
+                                    <span style="font-size: 2rem; margin-right: 1rem;">⚡</span>
+                                    <div>
+                                        <div style="font-weight: 600; color: #f8fafc;">極速分析</div>
+                                        <div style="color: #cbd5e1; font-size: 0.9rem;">AI 驅動，3 分鐘完成深度分析</div>
+                                    </div>
+                                </div>
+                                <div style="display: flex; align-items: center; margin-bottom: 1.5rem; padding: 1rem; background: rgba(16, 185, 129, 0.1); border-radius: 10px; border-left: 4px solid #10b981;">
+                                    <span style="font-size: 2rem; margin-right: 1rem;">🆓</span>
+                                    <div>
+                                        <div style="font-weight: 600; color: #f8fafc;">開源免費</div>
+                                        <div style="color: #cbd5e1; font-size: 0.9rem;">零成本使用，無限制訪問</div>
+                                    </div>
+                                </div>
+                                <div style="display: flex; align-items: center; margin-bottom: 1.5rem; padding: 1rem; background: rgba(16, 185, 129, 0.1); border-radius: 10px; border-left: 4px solid #10b981;">
+                                    <span style="font-size: 2rem; margin-right: 1rem;">🎯</span>
+                                    <div>
+                                        <div style="font-weight: 600; color: #f8fafc;">精準無誤</div>
+                                        <div style="color: #cbd5e1; font-size: 0.9rem;">AI 分析準確率達 95%+</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>        
+    <!-- Slide 3: 核心功能 - 動態展示 -->
+            <section>
+                <div class="slide-bg slide-bg-gradient"></div>
+                <div class="slide-content">
+                    <h2>🎯 六大核心功能，重塑法律研究體驗</h2>
+                    <div class="feature-grid">
+                        <div class="feature-card animate-on-scroll">
+                            <div class="feature-icon">
+                                <svg width="40" height="40" fill="white" viewBox="0 0 24 24">
+                                    <path stroke="white" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                                </svg>
+                            </div>
+                            <div class="feature-title">📄 智能合約分析</div>
+                            <div class="feature-desc">AI 深度解析合約條款，自動識別風險點，提供專業修改建議，讓合約審查從數小時縮短到數分鐘。</div>
+                        </div>
+                        
+                        <div class="feature-card animate-on-scroll">
+                            <div class="feature-icon">
+                                <svg width="40" height="40" fill="white" viewBox="0 0 24 24">
+                                    <path stroke="white" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                                </svg>
+                            </div>
+                            <div class="feature-title">🔍 案例法搜索</div>
+                            <div class="feature-desc">語義搜索技術，精準匹配相關判例，提供完整的案例分析和法律先例，建立強有力的法律論證。</div>
+                        </div>
+                        
+                        <div class="feature-card animate-on-scroll">
+                            <div class="feature-icon">
+                                <svg width="40" height="40" fill="white" viewBox="0 0 24 24">
+                                    <path stroke="white" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                            </div>
+                            <div class="feature-title">✅ 法規遵循檢查</div>
+                            <div class="feature-desc">實時監控最新法規變化，自動檢查文件合規性，確保業務操作始終符合法律要求。</div>
+                        </div>
+                        
+                        <div class="feature-card animate-on-scroll">
+                            <div class="feature-icon">
+                                <svg width="40" height="40" fill="white" viewBox="0 0 24 24">
+                                    <path stroke="white" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+                                </svg>
+                            </div>
+                            <div class="feature-title">📚 深度法律研究</div>
+                            <div class="feature-desc">整合全球法律資料庫，提供跨司法管轄區的法律分析，支持複雜的法律研究需求。</div>
+                        </div>
+                        
+                        <div class="feature-card animate-on-scroll">
+                            <div class="feature-icon">
+                                <svg width="40" height="40" fill="white" viewBox="0 0 24 24">
+                                    <path stroke="white" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                                </svg>
+                            </div>
+                            <div class="feature-title">🧠 AI 智能分析</div>
+                            <div class="feature-desc">運用最新的 GPT-4 和 Claude 技術，提供人類專家級別的法律分析和風險評估。</div>
+                        </div>
+                        
+                        <div class="feature-card animate-on-scroll">
+                            <div class="feature-icon">
+                                <svg width="40" height="40" fill="white" viewBox="0 0 24 24">
+                                    <path stroke="white" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+                                </svg>
+                            </div>
+                            <div class="feature-title">🔒 企業級安全</div>
+                            <div class="feature-desc">遵循律師-客戶特權保護，端到端加密，確保所有法律研究過程的絕對機密性。</div>
+                        </div>
+                    </div>
+                </div>
+            </section>       
+     <!-- Slide 4: 技術架構 - 現代化展示 -->
+            <section>
+                <div class="slide-bg slide-bg-pattern"></div>
+                <div class="slide-content">
+                    <h2>🛠️ 現代化技術架構，打造極致體驗</h2>
+                    <div class="tech-stack">
+                        <div class="tech-category">
+                            <h4>🎨 前端技術</h4>
+                            <div class="tech-item">
+                                <div class="tech-name">Next.js 14</div>
+                                <div class="tech-desc">最新 React 框架，極致性能</div>
+                            </div>
+                            <div class="tech-item">
+                                <div class="tech-name">TypeScript</div>
+                                <div class="tech-desc">類型安全，開發效率提升</div>
+                            </div>
+                            <div class="tech-item">
+                                <div class="tech-name">Tailwind CSS</div>
+                                <div class="tech-desc">現代化 UI 設計系統</div>
+                            </div>
+                        </div>
+                        
+                        <div class="tech-category">
+                            <h4>🤖 AI 引擎</h4>
+                            <div class="tech-item">
+                                <div class="tech-name">OpenAI GPT-4</div>
+                                <div class="tech-desc">最強語言理解模型</div>
+                            </div>
+                            <div class="tech-item">
+                                <div class="tech-name">Claude 3.5 Sonnet</div>
+                                <div class="tech-desc">專業分析引擎</div>
+                            </div>
+                            <div class="tech-item">
+                                <div class="tech-name">Vercel AI SDK</div>
+                                <div class="tech-desc">無縫 AI 集成框架</div>
+                            </div>
+                        </div>
+                        
+                        <div class="tech-category">
+                            <h4>🔍 搜索技術</h4>
+                            <div class="tech-item">
+                                <div class="tech-name">Tavily API</div>
+                                <div class="tech-desc">專業搜索引擎</div>
+                            </div>
+                            <div class="tech-item">
+                                <div class="tech-name">Vector Search</div>
+                                <div class="tech-desc">語義相似度匹配</div>
+                            </div>
+                            <div class="tech-item">
+                                <div class="tech-name">RAG 架構</div>
+                                <div class="tech-desc">檢索增強生成</div>
+                            </div>
+                        </div>
+                        
+                        <div class="tech-category">
+                            <h4>☁️ 雲端部署</h4>
+                            <div class="tech-item">
+                                <div class="tech-name">Vercel</div>
+                                <div class="tech-desc">全球 CDN 加速</div>
+                            </div>
+                            <div class="tech-item">
+                                <div class="tech-name">GitHub Actions</div>
+                                <div class="tech-desc">自動化 CI/CD</div>
+                            </div>
+                            <div class="tech-item">
+                                <div class="tech-name">Supabase</div>
+                                <div class="tech-desc">現代化數據庫</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>  
+          <!-- Slide 5: 性能數據 - 震撼展示 -->
+            <section>
+                <div class="slide-bg slide-bg-gradient"></div>
+                <div class="slide-content">
+                    <h2>📊 驚人的性能表現，數據說話</h2>
+                    <div class="metrics-grid">
+                        <div class="metric-card glow-effect">
+                            <div class="metric-value pulse-animation">95%</div>
+                            <div class="metric-label">AI 分析準確率</div>
+                            <div class="metric-progress">
+                                <div class="metric-progress-fill" style="width: 95%;"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="metric-card glow-effect">
+                            <div class="metric-value pulse-animation">70%</div>
+                            <div class="metric-label">時間節省</div>
+                            <div class="metric-progress">
+                                <div class="metric-progress-fill" style="width: 70%;"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="metric-card glow-effect">
+                            <div class="metric-value pulse-animation">< 3s</div>
+                            <div class="metric-label">響應時間</div>
+                            <div class="metric-progress">
+                                <div class="metric-progress-fill" style="width: 90%;"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="metric-card glow-effect">
+                            <div class="metric-value pulse-animation">99.9%</div>
+                            <div class="metric-label">系統可用性</div>
+                            <div class="metric-progress">
+                                <div class="metric-progress-fill" style="width: 99%;"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="metric-card glow-effect">
+                            <div class="metric-value pulse-animation">$0</div>
+                            <div class="metric-label">使用成本</div>
+                            <div class="metric-progress">
+                                <div class="metric-progress-fill" style="width: 100%;"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="metric-card glow-effect">
+                            <div class="metric-value pulse-animation">24/7</div>
+                            <div class="metric-label">全天候服務</div>
+                            <div class="metric-progress">
+                                <div class="metric-progress-fill" style="width: 100%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-top: 4rem; text-align: center; padding: 2rem; background: rgba(16, 185, 129, 0.1); border-radius: 15px; border: 1px solid rgba(16, 185, 129, 0.3);">
+                        <h3 style="color: #10b981; margin-bottom: 1rem;">💰 投資回報率分析</h3>
+                        <p style="font-size: 1.5rem; color: #f8fafc; margin-bottom: 0.5rem;">預估 <span style="color: #10b981; font-weight: 800; font-size: 2rem;">300%</span> ROI</p>
+                        <p style="color: #cbd5e1;">在 6 個月內實現投資回報，主要來自效率提升和成本節省</p>
+                    </div>
+                </div>
+            </section>        
+    <!-- Slide 6: 產品演示 - 互動展示 -->
+            <section>
+                <div class="slide-bg slide-bg-pattern"></div>
+                <div class="slide-content">
+                    <h2>💻 產品實際演示</h2>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; margin-top: 3rem;">
+                        <div>
+                            <div style="background: rgba(255, 255, 255, 0.05); border-radius: 15px; padding: 2rem; border: 1px solid rgba(59, 130, 246, 0.2);">
+                                <h3 style="color: #60a5fa; margin-bottom: 1.5rem;">🎯 核心界面特色</h3>
+                                <ul style="space-y: 1rem; color: #cbd5e1;">
+                                    <li style="margin-bottom: 1rem; display: flex; align-items: center;">
+                                        <span style="color: #10b981; margin-right: 0.5rem;">✓</span>
+                                        直觀的對話式界面
+                                    </li>
+                                    <li style="margin-bottom: 1rem; display: flex; align-items: center;">
+                                        <span style="color: #10b981; margin-right: 0.5rem;">✓</span>
+                                        實時 AI 分析反饋
+                                    </li>
+                                    <li style="margin-bottom: 1rem; display: flex; align-items: center;">
+                                        <span style="color: #10b981; margin-right: 0.5rem;">✓</span>
+                                        多模態輸入支持
+                                    </li>
+                                    <li style="margin-bottom: 1rem; display: flex; align-items: center;">
+                                        <span style="color: #10b981; margin-right: 0.5rem;">✓</span>
+                                        專業法律術語理解
+                                    </li>
+                                    <li style="margin-bottom: 1rem; display: flex; align-items: center;">
+                                        <span style="color: #10b981; margin-right: 0.5rem;">✓</span>
+                                        引用來源自動標註
+                                    </li>
+                                </ul>
+                            </div>
+                            
+                            <div style="margin-top: 2rem; text-align: center;">
+                                <a href="https://legalmentor.vercel.app" target="_blank" style="display: inline-flex; align-items: center; background: linear-gradient(135deg, #1e40af, #3b82f6); color: white; padding: 1rem 2rem; border-radius: 10px; text-decoration: none; font-weight: 600; font-size: 1.1rem; transition: all 0.3s ease;">
+                                    <svg width="20" height="20" fill="white" style="margin-right: 0.5rem;" viewBox="0 0 24 24">
+                                        <path d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+                                    </svg>
+                                    🚀 立即體驗 Legal Mentor
+                                </a>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <div style="background: #1e293b; border-radius: 15px; padding: 1.5rem; border: 1px solid rgba(59, 130, 246, 0.2); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);">
+                                <div style="display: flex; align-items: center; margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(255, 255, 255, 0.1);">
+                                    <div style="display: flex; gap: 0.5rem; margin-right: 1rem;">
+                                        <div style="width: 12px; height: 12px; background: #ef4444; border-radius: 50%;"></div>
+                                        <div style="width: 12px; height: 12px; background: #f59e0b; border-radius: 50%;"></div>
+                                        <div style="width: 12px; height: 12px; background: #10b981; border-radius: 50%;"></div>
+                                    </div>
+                                    <div style="color: #cbd5e1; font-size: 0.9rem;">legalmentor.vercel.app</div>
+                                </div>
+                                
+                                <div style="margin-bottom: 1.5rem;">
+                                    <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                                        <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #1e40af, #3b82f6); border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                                            <svg width="20" height="20" fill="white" viewBox="0 0 24 24">
+                                                <path d="M12 2v20M8 6h8M6 10c0 2 2 4 4 4s4-2 4-4"/>
+                                            </svg>
+                                        </div>
+                                        <div>
+                                            <div style="color: #f8fafc; font-weight: 600;">Legal Mentor</div>
+                                            <div style="color: #94a3b8; font-size: 0.8rem;">AI Legal Research Assistant</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 10px; padding: 1rem; margin-bottom: 1rem;">
+                                    <div style="color: #cbd5e1; font-size: 0.9rem; margin-bottom: 0.5rem;">用戶輸入：</div>
+                                    <div style="color: #f8fafc;">"請分析這份就業合約中的競業禁止條款是否合理？"</div>
+                                </div>
+                                
+                                <div style="background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 10px; padding: 1rem;">
+                                    <div style="color: #cbd5e1; font-size: 0.9rem; margin-bottom: 0.5rem;">AI 分析結果：</div>
+                                    <div style="color: #f8fafc; font-size: 0.9rem; line-height: 1.5;">根據分析，該競業禁止條款存在以下問題：<br/>1. 限制期間過長（24個月）<br/>2. 地理範圍過於廣泛<br/>3. 缺乏合理補償機制...</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section> 
+           <!-- Slide 7: 發展路線圖 - 時間軸展示 -->
+            <section>
+                <div class="slide-bg slide-bg-gradient"></div>
+                <div class="slide-content">
+                    <h2>🗺️ 產品發展路線圖</h2>
+                    <div class="roadmap" style="margin-top: 3rem;">
+                        <div class="roadmap-item" style="border-left: 4px solid #10b981;">
+                            <div class="roadmap-date">Q4 2024</div>
+                            <div class="roadmap-phase">第一階段 ✅</div>
+                            <div class="roadmap-title">MVP 核心功能</div>
+                            <div class="roadmap-desc">
+                                ✓ 基礎 AI 對話功能<br/>
+                                ✓ 法律文件搜索<br/>
+                                ✓ 用戶界面優化<br/>
+                                ✓ 開源代碼發布
+                            </div>
+                        </div>
+                        
+                        <div class="roadmap-item" style="border-left: 4px solid #3b82f6;">
+                            <div class="roadmap-date">Q1 2025</div>
+                            <div class="roadmap-phase">第二階段 🚧</div>
+                            <div class="roadmap-title">功能增強與擴展</div>
+                            <div class="roadmap-desc">
+                                🔄 文件批量上傳分析<br/>
+                                🔄 API 接口開放<br/>
+                                🔄 移動端應用開發<br/>
+                                🔄 多語言支持
+                            </div>
+                        </div>
+                        
+                        <div class="roadmap-item" style="border-left: 4px solid #8b5cf6;">
+                            <div class="roadmap-date">Q2 2025</div>
+                            <div class="roadmap-phase">第三階段 📋</div>
+                            <div class="roadmap-title">企業級解決方案</div>
+                            <div class="roadmap-desc">
+                                📊 多租戶架構<br/>
+                                🔐 企業級權限管理<br/>
+                                🏢 私有雲部署選項<br/>
+                                📈 高級分析報告
+                            </div>
+                        </div>
+                        
+                        <div class="roadmap-item" style="border-left: 4px solid #f59e0b;">
+                            <div class="roadmap-date">Q3 2025</div>
+                            <div class="roadmap-phase">第四階段 🌍</div>
+                            <div class="roadmap-title">全球化與智能化</div>
+                            <div class="roadmap-desc">
+                                🌐 國際法律體系支持<br/>
+                                🤖 更強大的 AI 模型<br/>
+                                🔗 第三方系統集成<br/>
+                                📱 完整生態系統
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section> 
+           <!-- Slide 8: 商業價值 - 投資亮點 -->
+            <section>
+                <div class="slide-bg slide-bg-pattern"></div>
+                <div class="slide-content">
+                    <h2>💼 巨大的商業價值與市場機會</h2>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; margin-top: 3rem;">
+                        <div>
+                            <h3 style="color: #10b981; margin-bottom: 2rem;">💰 成本效益分析</h3>
+                            <div style="space-y: 2rem;">
+                                <div style="background: rgba(16, 185, 129, 0.1); border-radius: 15px; padding: 2rem; border: 1px solid rgba(16, 185, 129, 0.3);">
+                                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                                        <span style="color: #f8fafc; font-weight: 600;">研究時間節省</span>
+                                        <span style="color: #10b981; font-weight: 800; font-size: 1.5rem;">70%</span>
+                                    </div>
+                                    <div style="color: #cbd5e1; font-size: 0.9rem;">從 8 小時縮短到 2.4 小時</div>
+                                </div>
+                                
+                                <div style="background: rgba(16, 185, 129, 0.1); border-radius: 15px; padding: 2rem; border: 1px solid rgba(16, 185, 129, 0.3);">
+                                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                                        <span style="color: #f8fafc; font-weight: 600;">人力成本降低</span>
+                                        <span style="color: #10b981; font-weight: 800; font-size: 1.5rem;">60%</span>
+                                    </div>
+                                    <div style="color: #cbd5e1; font-size: 0.9rem;">每案例節省 $1,200-3,000</div>
+                                </div>
+                                
+                                <div style="background: rgba(16, 185, 129, 0.1); border-radius: 15px; padding: 2rem; border: 1px solid rgba(16, 185, 129, 0.3);">
+                                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                                        <span style="color: #f8fafc; font-weight: 600;">錯誤率減少</span>
+                                        <span style="color: #10b981; font-weight: 800; font-size: 1.5rem;">80%</span>
+                                    </div>
+                                    <div style="color: #cbd5e1; font-size: 0.9rem;">從 15% 降低到 3%</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <h3 style="color: #3b82f6; margin-bottom: 2rem;">📈 市場機會</h3>
+                            <div style="space-y: 2rem;">
+                                <div style="background: rgba(59, 130, 246, 0.1); border-radius: 15px; padding: 2rem; border: 1px solid rgba(59, 130, 246, 0.3);">
+                                    <div style="color: #60a5fa; font-weight: 700; font-size: 1.2rem; margin-bottom: 1rem;">🌍 全球法律科技市場</div>
+                                    <div style="color: #f8fafc; font-size: 1.5rem; font-weight: 800; margin-bottom: 0.5rem;">$31.8B</div>
+                                    <div style="color: #cbd5e1; font-size: 0.9rem;">預計 2025 年市場規模</div>
+                                </div>
+                                
+                                <div style="background: rgba(59, 130, 246, 0.1); border-radius: 15px; padding: 2rem; border: 1px solid rgba(59, 130, 246, 0.3);">
+                                    <div style="color: #60a5fa; font-weight: 700; font-size: 1.2rem; margin-bottom: 1rem;">📊 年增長率</div>
+                                    <div style="color: #f8fafc; font-size: 1.5rem; font-weight: 800; margin-bottom: 0.5rem;">23.2%</div>
+                                    <div style="color: #cbd5e1; font-size: 0.9rem;">CAGR 2023-2030</div>
+                                </div>
+                                
+                                <div style="background: rgba(59, 130, 246, 0.1); border-radius: 15px; padding: 2rem; border: 1px solid rgba(59, 130, 246, 0.3);">
+                                    <div style="color: #60a5fa; font-weight: 700; font-size: 1.2rem; margin-bottom: 1rem;">🎯 目標用戶</div>
+                                    <div style="color: #f8fafc; font-size: 1.5rem; font-weight: 800; margin-bottom: 0.5rem;">1.3M+</div>
+                                    <div style="color: #cbd5e1; font-size: 0.9rem;">全球執業律師數量</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-top: 4rem; text-align: center; padding: 3rem; background: linear-gradient(135deg, rgba(245, 158, 11, 0.1), rgba(16, 185, 129, 0.1)); border-radius: 20px; border: 1px solid rgba(245, 158, 11, 0.3);">
+                        <h3 style="color: #f59e0b; font-size: 2rem; margin-bottom: 1rem;">🚀 投資亮點</h3>
+                        <p style="font-size: 1.3rem; color: #f8fafc; margin-bottom: 1rem;">
+                            開源策略 + AI 技術 + 巨大市場 = <span style="color: #10b981; font-weight: 800;">無限潛力</span>
+                        </p>
+                        <p style="color: #cbd5e1;">搶占 AI 法律科技賽道，成為行業標準制定者</p>
+                    </div>
+                </div>
+            </section>            
+<!-- Slide 9: 競爭優勢 -->
+            <section>
+                <div class="slide-bg slide-bg-gradient"></div>
+                <div class="slide-content">
+                    <h2>🏆 無可比擬的競爭優勢</h2>
+                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 3rem; margin-top: 3rem;">
+                        <div style="background: rgba(255, 255, 255, 0.05); border-radius: 20px; padding: 2.5rem; border: 1px solid rgba(16, 185, 129, 0.3);">
+                            <div style="display: flex; align-items: center; margin-bottom: 2rem;">
+                                <div style="width: 60px; height: 60px; background: linear-gradient(135deg, #10b981, #059669); border-radius: 15px; display: flex; align-items: center; justify-content: center; margin-right: 1rem;">
+                                    <span style="font-size: 1.5rem;">🔓</span>
+                                </div>
+                                <h3 style="color: #10b981; margin: 0;">開源優勢</h3>
+                            </div>
+                            <ul style="color: #cbd5e1; line-height: 1.8;">
+                                <li>✓ 完全透明，可信度高</li>
+                                <li>✓ 社區驅動，快速迭代</li>
+                                <li>✓ 零授權費用</li>
+                                <li>✓ 可自定義部署</li>
+                            </ul>
+                        </div>
+                        
+                        <div style="background: rgba(255, 255, 255, 0.05); border-radius: 20px; padding: 2.5rem; border: 1px solid rgba(59, 130, 246, 0.3);">
+                            <div style="display: flex; align-items: center; margin-bottom: 2rem;">
+                                <div style="width: 60px; height: 60px; background: linear-gradient(135deg, #3b82f6, #1e40af); border-radius: 15px; display: flex; align-items: center; justify-content: center; margin-right: 1rem;">
+                                    <span style="font-size: 1.5rem;">🤖</span>
+                                </div>
+                                <h3 style="color: #3b82f6; margin: 0;">AI 技術領先</h3>
+                            </div>
+                            <ul style="color: #cbd5e1; line-height: 1.8;">
+                                <li>✓ 多模型融合架構</li>
+                                <li>✓ 專業法律訓練</li>
+                                <li>✓ 持續學習優化</li>
+                                <li>✓ 語義理解精準</li>
+                            </ul>
+                        </div>
+                        
+                        <div style="background: rgba(255, 255, 255, 0.05); border-radius: 20px; padding: 2.5rem; border: 1px solid rgba(139, 92, 246, 0.3);">
+                            <div style="display: flex; align-items: center; margin-bottom: 2rem;">
+                                <div style="width: 60px; height: 60px; background: linear-gradient(135deg, #8b5cf6, #7c3aed); border-radius: 15px; display: flex; align-items: center; justify-content: center; margin-right: 1rem;">
+                                    <span style="font-size: 1.5rem;">⚡</span>
+                                </div>
+                                <h3 style="color: #8b5cf6; margin: 0;">性能卓越</h3>
+                            </div>
+                            <ul style="color: #cbd5e1; line-height: 1.8;">
+                                <li>✓ 毫秒級響應速度</li>
+                                <li>✓ 99.9% 系統可用性</li>
+                                <li>✓ 全球 CDN 加速</li>
+                                <li>✓ 自動擴展架構</li>
+                            </ul>
+                        </div>
+                        
+                        <div style="background: rgba(255, 255, 255, 0.05); border-radius: 20px; padding: 2.5rem; border: 1px solid rgba(245, 158, 11, 0.3);">
+                            <div style="display: flex; align-items: center; margin-bottom: 2rem;">
+                                <div style="width: 60px; height: 60px; background: linear-gradient(135deg, #f59e0b, #d97706); border-radius: 15px; display: flex; align-items: center; justify-content: center; margin-right: 1rem;">
+                                    <span style="font-size: 1.5rem;">🎯</span>
+                                </div>
+                                <h3 style="color: #f59e0b; margin: 0;">專業專注</h3>
+                            </div>
+                            <ul style="color: #cbd5e1; line-height: 1.8;">
+                                <li>✓ 專為法律領域設計</li>
+                                <li>✓ 深度行業理解</li>
+                                <li>✓ 專業術語精通</li>
+                                <li>✓ 合規性保障</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 10: 結束頁 - 行動呼籲 -->
+            <section>
+                <div class="slide-bg slide-bg-primary"></div>
+                <div class="slide-content title-slide">
+                    <div style="text-align: center; color: white;">
+                        <h1 style="font-size: 3.5rem; margin-bottom: 2rem;">🚀 加入 AI 法律革命</h1>
+                        <p style="font-size: 1.5rem; margin-bottom: 3rem; opacity: 0.9;">
+                            Legal Mentor 正在重新定義法律研究的未來
+                        </p>
+                        
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin: 3rem 0;">
+                            <div style="background: rgba(255, 255, 255, 0.1); border-radius: 15px; padding: 2rem; backdrop-filter: blur(10px);">
+                                <h3 style="color: white; margin-bottom: 1rem;">🔗 立即體驗</h3>
+                                <p style="margin-bottom: 1.5rem; opacity: 0.8;">訪問我們的在線演示</p>
+                                <a href="https://legalmentor.vercel.app" target="_blank" style="display: inline-block; background: white; color: #1e40af; padding: 0.75rem 1.5rem; border-radius: 8px; text-decoration: none; font-weight: 600;">
+                                    legalmentor.vercel.app
+                                </a>
+                            </div>
+                            
+                            <div style="background: rgba(255, 255, 255, 0.1); border-radius: 15px; padding: 2rem; backdrop-filter: blur(10px);">
+                                <h3 style="color: white; margin-bottom: 1rem;">📂 開源代碼</h3>
+                                <p style="margin-bottom: 1.5rem; opacity: 0.8;">查看完整項目源碼</p>
+                                <a href="https://github.com/yourusername/legal-mentor" target="_blank" style="display: inline-block; background: white; color: #1e40af; padding: 0.75rem 1.5rem; border-radius: 8px; text-decoration: none; font-weight: 600;">
+                                    GitHub Repository
+                                </a>
+                            </div>
+                        </div>
+                        
+                        <div style="margin-top: 4rem;">
+                            <h2 style="font-size: 2rem; margin-bottom: 1rem;">💡 讓我們一起改變法律行業</h2>
+                            <p style="font-size: 1.2rem; opacity: 0.8;">
+                                感謝您的關注！期待與您合作，共同推動 AI 法律科技的發展
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+        </div>
+    </div>
+
+    <!-- Reveal.js Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reveal.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/plugin/notes/notes.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/plugin/markdown/markdown.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/plugin/highlight/highlight.js"></script>
+
+    <script>
+        // Initialize Reveal.js
+        Reveal.initialize({
+            hash: true,
+            controls: true,
+            progress: true,
+            center: false,
+            transition: 'slide',
+            transitionSpeed: 'default',
+            backgroundTransition: 'fade',
+            
+            plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+        });
+
+        // Animate elements on scroll
+        function animateOnScroll() {
+            const elements = document.querySelectorAll('.animate-on-scroll');
+            elements.forEach(element => {
+                const elementTop = element.getBoundingClientRect().top;
+                const elementVisible = 150;
+                
+                if (elementTop < window.innerHeight - elementVisible) {
+                    element.classList.add('animated');
+                }
+            });
+        }
+
+        // Add scroll animation listener
+        Reveal.addEventListener('slidechanged', function(event) {
+            setTimeout(animateOnScroll, 300);
+        });
+
+        // Initial animation
+        setTimeout(animateOnScroll, 500);
+        
+        // Add some interactive effects
+        document.addEventListener('DOMContentLoaded', function() {
+            // Animate progress bars
+            setTimeout(() => {
+                const progressBars = document.querySelectorAll('.metric-progress-fill');
+                progressBars.forEach(bar => {
+                    const width = bar.style.width;
+                    bar.style.width = '0%';
+                    setTimeout(() => {
+                        bar.style.width = width;
+                    }, 500);
+                });
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
