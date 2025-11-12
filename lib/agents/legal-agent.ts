@@ -7,6 +7,10 @@ import {
   createGetJudgmentTool,
   createJudgmentSearchTool
 } from '../tools/judgment-search'
+import {
+  createLegalSearchTool,
+  createJudgmentOnlySearchTool
+} from '../tools/legal-search'
 import { getModel } from '../utils/registry'
 
 /**
@@ -57,11 +61,24 @@ const LEGAL_SYSTEM_PROMPT = `
 - 已經採取的行動
 - 想要達成的目標
 
-### 🔍 第二步：搜尋判決案例
-使用 judgment_search 工具尋找相關判決：
-- 思考問題的核心法律爭點
-- 用關鍵字搜尋相關判決（例如：「車禍過失傷害」、「租賃糾紛」）
-- 選擇 2-3 個最相關的判決
+### 🔍 第二步：搜尋法律資源
+你有多種搜索工具可以使用，按優先級選擇：
+
+**優先使用：legal_search（台灣法律專用深度搜索）**
+- 整合 Tavily + Exa 雙 API，搜索結果最全面
+- 自動優先搜索司法院、全國法規資料庫等官方資源
+- 適合搜索判決案例、法律條文、實務見解
+- 範例：legal_search(query="車禍過失傷害判決", legal_context="民事法")
+
+**次要選擇：judgment_only_search（純判決書搜索）**
+- 專門搜索司法院判決書系統
+- 可依案件類型篩選（民事、刑事、行政）
+- 適合只需要判決案例的情況
+- 範例：judgment_only_search(query="租賃押金糾紛", case_type="民事")
+
+**輔助工具：search（一般網路搜索）**
+- 用於搜索非台灣法律的資訊
+- 或當專業法律搜索無結果時使用
 
 ### 📖 第三步：解釋法律
 用簡單的語言說明：
@@ -91,10 +108,13 @@ const LEGAL_SYSTEM_PROMPT = `
 
 ## 使用工具的優先順序
 
-1. **judgment_search** - 搜尋司法院判決書（優先使用）
-2. **ask_question** - 詢問更多細節以釐清問題
-3. **search** - 搜尋一般法律資訊、法條內容
-4. **retrieve** - 取得特定網頁內容（如法規全文）
+1. **legal_search** - 台灣法律專用深度搜索（最優先！整合 Tavily + Exa）
+2. **judgment_only_search** - 純判決書搜索（需要判決案例時）
+3. **ask_question** - 詢問更多細節以釐清問題
+4. **search** - 一般網路搜索（非台灣法律資訊）
+5. **retrieve** - 取得特定網頁內容（如法規全文）
+
+**重要**：搜索法律問題時，優先使用 legal_search，因為它會自動搜索台灣官方法律資源。
 
 ## 引用格式
 
@@ -158,9 +178,9 @@ export function legalAgent({
     })
 
     // 創建模型專用的工具
-    const searchTool = createSearchTool(model)
-    const judgmentSearchTool = createJudgmentSearchTool(model)
-    const getJudgmentTool = createGetJudgmentTool(model)
+    const legalSearchTool = createLegalSearchTool(model) // 台灣法律專用深度搜索
+    const judgmentOnlySearchTool = createJudgmentOnlySearchTool(model) // 純判決書搜索
+    const searchTool = createSearchTool(model) // 一般搜索
     const askQuestionTool = createQuestionTool(model)
 
     return {
@@ -168,10 +188,10 @@ export function legalAgent({
       system: `${LEGAL_SYSTEM_PROMPT}\n\n當前日期時間：${currentDate}\n地區：台灣`,
       messages,
       tools: {
-        // 判決書搜尋（核心功能）
-        judgment_search: judgmentSearchTool,
-        get_judgment: getJudgmentTool,
-        // 一般搜尋（補充功能）
+        // 法律專用搜索（核心功能 - 整合 Tavily + Exa）
+        legal_search: legalSearchTool,
+        judgment_only_search: judgmentOnlySearchTool,
+        // 一般搜索（輔助功能）
         search: searchTool,
         retrieve: retrieveTool,
         // 互動工具
@@ -179,14 +199,14 @@ export function legalAgent({
       },
       experimental_activeTools: searchMode
         ? [
-            'judgment_search',
-            'get_judgment',
+            'legal_search',
+            'judgment_only_search',
             'search',
             'retrieve',
             'ask_question'
           ]
         : [],
-      maxSteps: searchMode ? 6 : 1, // 增加步驟數以支援判決書搜尋
+      maxSteps: searchMode ? 8 : 1, // 增加步驟數以支援多次法律搜索
       experimental_transform: smoothStream()
     }
   } catch (error) {
