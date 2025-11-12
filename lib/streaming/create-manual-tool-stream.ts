@@ -6,7 +6,7 @@ import {
   streamText
 } from 'ai'
 
-import { manualResearcher } from '../agents/manual-researcher'
+import { manualLegalAgent } from '../agents/manual-legal-agent'
 import { ExtendedCoreMessage } from '../types'
 import { getMaxAllowedTokens, truncateMessages } from '../utils/context-window'
 
@@ -38,7 +38,7 @@ export function createManualToolStreamResponse(config: BaseStreamConfig) {
             searchMode
           )
 
-        const researcherConfig = manualResearcher({
+        const researcherConfig = manualLegalAgent({
           messages: [...truncatedMessages, ...toolCallMessages],
           model: modelId,
           isSearchEnabled: searchMode

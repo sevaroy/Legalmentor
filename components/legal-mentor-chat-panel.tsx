@@ -117,21 +117,22 @@ export function LegalMentorChatPanel({
             </div>
             <div className="text-center space-y-3">
               <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-blue-800 dark:from-blue-400 dark:to-blue-600 bg-clip-text text-transparent">
-                How can I assist with your legal research today?
+                有什麼法律問題需要協助嗎？
               </h1>
               <p className="text-muted-foreground text-lg max-w-2xl">
-                Ask me about contracts, case law, regulations, or any legal matter. 
-                I'll provide comprehensive analysis with proper citations.
+                我可以幫您查詢判決案例、解釋法律條文、分析法律問題。
+                <br />
+                用淺顯易懂的方式，讓您了解法律怎麼說。
               </p>
               <div className="flex items-center justify-center gap-4 text-sm text-blue-600 dark:text-blue-400">
                 <div className="flex items-center gap-2">
                   <Shield className="size-4" />
-                  <span>Confidential</span>
+                  <span>隱私保護</span>
                 </div>
                 <div className="w-1 h-1 bg-blue-400 rounded-full" />
                 <div className="flex items-center gap-2">
                   <Scale className="size-4" />
-                  <span>Professional Grade</span>
+                  <span>判決書智能搜尋</span>
                 </div>
               </div>
             </div>
