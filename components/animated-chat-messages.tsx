@@ -1,12 +1,15 @@
 'use client'
 
-import { cn } from '@/lib/utils/index'
-import { ChatRequestOptions, JSONValue, Message } from 'ai'
 import { useEffect, useMemo, useState } from 'react'
+
+import { ChatRequestOptions, JSONValue, Message } from 'ai'
+
+import { cn } from '@/lib/utils/index'
+
+import { Spinner } from './ui/spinner'
 import { AnimatedMessageBubble, FadeIn, StaggerChildren } from './animations'
 import { RenderMessage } from './render-message'
 import { ToolSection } from './tool-section'
-import { Spinner } from './ui/spinner'
 
 interface ChatSection {
   id: string

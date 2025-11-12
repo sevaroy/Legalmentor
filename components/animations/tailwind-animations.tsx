@@ -1,7 +1,8 @@
 'use client'
 
-import { cn } from '@/lib/utils/index'
 import { ReactNode } from 'react'
+
+import { cn } from '@/lib/utils/index'
 
 interface AnimationProps {
   children: ReactNode

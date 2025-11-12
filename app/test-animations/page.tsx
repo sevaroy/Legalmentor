@@ -1,5 +1,10 @@
 'use client'
 
+import { useState } from 'react'
+
+import { Button } from '@/components/ui/button'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+
 import {
     AIThinkingAnimation,
     AnimatedButton,
@@ -10,9 +15,6 @@ import {
     SmartLoadingAnimation,
     TypingAnimation
 } from '@/components/animations'
-import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { useState } from 'react'
 
 export default function TestAnimationsPage() {
   const [showAnimations, setShowAnimations] = useState(false)

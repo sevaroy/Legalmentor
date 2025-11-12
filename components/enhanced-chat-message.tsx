@@ -1,7 +1,9 @@
 'use client'
 
-import { cn } from '@/lib/utils/index'
 import { Message } from 'ai/react'
+
+import { cn } from '@/lib/utils/index'
+
 import { AnimatedMessageBubble, TypingAnimation } from './animations'
 
 interface EnhancedChatMessageProps {

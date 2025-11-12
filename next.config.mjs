@@ -16,6 +16,11 @@ const nextConfig = {
         hostname: 'lh3.googleusercontent.com',
         port: '',
         pathname: '/a/**' // Google user content often follows this pattern
+      },
+      {
+        protocol: 'https',
+        hostname: '**', // Allow all HTTPS images for search results
+        port: ''
       }
     ]
   }

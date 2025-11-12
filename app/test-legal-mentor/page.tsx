@@ -1,12 +1,16 @@
 'use client'
 
-import { LegalMentorEmptyScreen } from '@/components/legal-mentor-empty-screen'
+import { useState } from 'react'
+
+import { FileText, Gavel, Scale, Shield } from 'lucide-react'
+
+import { useBrandConfig } from '@/lib/branding/config'
+
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { CaseLawIcon, ComplianceIcon, ContractAnalysisIcon, LegalMentorLogo, LegalResearchIcon } from '@/components/ui/legal-icons'
-import { useBrandConfig } from '@/lib/branding/config'
-import { FileText, Gavel, Scale, Shield } from 'lucide-react'
-import { useState } from 'react'
+
+import { LegalMentorEmptyScreen } from '@/components/legal-mentor-empty-screen'
 
 export default function TestLegalMentorPage() {
   const [showComponents, setShowComponents] = useState(false)

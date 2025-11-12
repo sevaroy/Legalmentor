@@ -1,7 +1,7 @@
-/* eslint-disable @next/next/no-img-element */
 'use client'
 
 import { useEffect, useState } from 'react'
+import Image from 'next/image'
 
 import { PlusCircle } from 'lucide-react'
 
@@ -128,13 +128,15 @@ export const SearchResultsImageSection: React.FC<
                 onClick={() => setSelectedIndex(actualIndex)}
               >
                 <div className="flex-1 h-full">
-                  <div className="h-full w-full">
+                  <div className="h-full w-full relative">
                     {image ? (
-                      <img
+                      <Image
                         src={image.url}
-                        alt={`Image ${actualIndex + 1}`}
-                        // Apply specific or default rounding
-                        className={`h-full w-full object-cover shadow ${cornerClasses}`}
+                        alt={image.description || `Image ${actualIndex + 1}`}
+                        fill
+                        sizes="(max-width: 768px) 50vw, 25vw"
+                        className={`object-cover shadow ${cornerClasses}`}
+                        loading="lazy"
                         onError={e =>
                           (e.currentTarget.src =
                             '/images/placeholder-image.png')
@@ -173,11 +175,14 @@ export const SearchResultsImageSection: React.FC<
                   <CarouselContent>
                     {convertedImages.map((img, idx) => (
                       <CarouselItem key={idx}>
-                        <div className="p-1 flex items-center justify-center h-full">
-                          <img
+                        <div className="p-1 flex items-center justify-center h-full relative min-h-[400px]">
+                          <Image
                             src={img.url}
-                            alt={`Image ${idx + 1}`}
-                            className="h-auto w-full object-contain max-h-[60vh]"
+                            alt={img.description || `Image ${idx + 1}`}
+                            fill
+                            sizes="(max-width: 768px) 100vw, 80vw"
+                            className="object-contain"
+                            loading="lazy"
                             onError={e =>
                               (e.currentTarget.src =
                                 '/images/placeholder-image.png')

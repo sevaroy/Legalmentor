@@ -1,8 +1,8 @@
 'use client'
 
-import { useRouter } from 'next/navigation'
-import { useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import Textarea from 'react-textarea-autosize'
+import { useRouter } from 'next/navigation'
 
 import { Message } from 'ai'
 import { ArrowUp, ChevronDown, MessageCirclePlus, Square } from 'lucide-react'
@@ -11,11 +11,11 @@ import { Model } from '@/lib/types/models'
 import { cn } from '@/lib/utils/index'
 
 import { useArtifact } from './artifact/artifact-context'
+import { Button } from './ui/button'
+import { IconLogo } from './ui/icons'
 import { EmptyScreen } from './empty-screen'
 import { ModelSelector } from './model-selector'
 import { SearchModeToggle } from './search-mode-toggle'
-import { Button } from './ui/button'
-import { IconLogo } from './ui/icons'
 
 interface ChatPanelProps {
   input: string
@@ -56,23 +56,23 @@ export function ChatPanel({
   const [enterDisabled, setEnterDisabled] = useState(false) // Disable Enter after composition ends
   const { close: closeArtifact } = useArtifact()
 
-  const handleCompositionStart = () => setIsComposing(true)
+  const handleCompositionStart = useCallback(() => setIsComposing(true), [])
 
-  const handleCompositionEnd = () => {
+  const handleCompositionEnd = useCallback(() => {
     setIsComposing(false)
     setEnterDisabled(true)
     setTimeout(() => {
       setEnterDisabled(false)
     }, 300)
-  }
+  }, [])
 
-  const handleNewChat = () => {
+  const handleNewChat = useCallback(() => {
     setMessages([])
     closeArtifact()
     router.push('/')
-  }
+  }, [setMessages, closeArtifact, router])
 
-  const isToolInvocationInProgress = () => {
+  const isToolInvocationInProgress = useCallback(() => {
     if (!messages.length) return false
 
     const lastMessage = messages[messages.length - 1]
@@ -85,7 +85,7 @@ export function ChatPanel({
       lastPart?.type === 'tool-invocation' &&
       lastPart?.toolInvocation?.state === 'call'
     )
-  }
+  }, [messages])
 
   // if query is not empty, submit the query
   useEffect(() => {
@@ -100,7 +100,7 @@ export function ChatPanel({
   }, [query])
 
   // Scroll to the bottom of the container
-  const handleScrollToBottom = () => {
+  const handleScrollToBottom = useCallback(() => {
     const scrollContainer = scrollContainerRef.current
     if (scrollContainer) {
       scrollContainer.scrollTo({
@@ -108,7 +108,7 @@ export function ChatPanel({
         behavior: 'smooth'
       })
     }
-  }
+  }, [scrollContainerRef])
 
   return (
     <div

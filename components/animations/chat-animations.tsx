@@ -1,7 +1,8 @@
 'use client'
 
-import { animated, useSpring } from '@react-spring/web'
 import { ReactNode, useEffect, useState } from 'react'
+
+import { animated, useSpring } from '@react-spring/web'
 
 // 消息氣泡動畫
 interface MessageBubbleProps {
