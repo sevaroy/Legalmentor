@@ -1,8 +1,10 @@
 'use client'
 
-import { cn } from '@/lib/utils/index'
-import { animated, useSpring } from '@react-spring/web'
 import { useEffect, useState } from 'react'
+
+import { animated, useSpring } from '@react-spring/web'
+
+import { cn } from '@/lib/utils/index'
 
 // 智能載入動畫
 interface SmartLoadingProps {

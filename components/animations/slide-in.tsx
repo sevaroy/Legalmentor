@@ -1,7 +1,8 @@
 'use client'
 
-import { animated, useSpring } from '@react-spring/web'
 import { ReactNode, useEffect, useState } from 'react'
+
+import { animated, useSpring } from '@react-spring/web'
 
 interface SlideInProps {
   children: ReactNode

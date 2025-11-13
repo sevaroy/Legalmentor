@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+
 import { ANIMATION_CONFIG, checkReducedMotion, isMobileDevice } from './config'
 
 // 動畫偏好 Hook

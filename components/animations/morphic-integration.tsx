@@ -2,6 +2,7 @@
 
 // Morphic 項目動畫集成示例
 import { Message } from 'ai/react'
+
 import {
     AIThinkingAnimation,
     AnimatedMessageBubble,

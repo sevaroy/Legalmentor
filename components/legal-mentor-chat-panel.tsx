@@ -1,20 +1,23 @@
 'use client'
 
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import Textarea from 'react-textarea-autosize'
+import { useRouter } from 'next/navigation'
+
+import { Message } from 'ai'
+import { ArrowUp, ChevronDown, MessageCirclePlus, Scale, Shield, Square } from 'lucide-react'
+
 import { useBrandConfig } from '@/lib/branding/config'
 import { Model } from '@/lib/types/models'
 import { cn } from '@/lib/utils/index'
-import { Message } from 'ai'
-import { ArrowUp, ChevronDown, MessageCirclePlus, Scale, Shield, Square } from 'lucide-react'
-import { useRouter } from 'next/navigation'
-import { useEffect, useRef, useState } from 'react'
-import Textarea from 'react-textarea-autosize'
-import { FadeIn, SlideIn } from './animations'
+
 import { useArtifact } from './artifact/artifact-context'
+import { Button } from './ui/button'
+import { LegalMentorLogo } from './ui/legal-icons'
+import { FadeIn, SlideIn } from './animations'
 import { LegalMentorEmptyScreen } from './legal-mentor-empty-screen'
 import { ModelSelector } from './model-selector'
 import { SearchModeToggle } from './search-mode-toggle'
-import { Button } from './ui/button'
-import { LegalMentorLogo } from './ui/legal-icons'
 
 interface LegalMentorChatPanelProps {
   input: string
@@ -55,20 +58,20 @@ export function LegalMentorChatPanel({
   const [enterDisabled, setEnterDisabled] = useState(false)
   const { close: closeArtifact } = useArtifact()
 
-  const handleCompositionStart = () => setIsComposing(true)
-  const handleCompositionEnd = () => {
+  const handleCompositionStart = useCallback(() => setIsComposing(true), [])
+  const handleCompositionEnd = useCallback(() => {
     setIsComposing(false)
     setEnterDisabled(true)
     setTimeout(() => setEnterDisabled(false), 300)
-  }
+  }, [])
 
-  const handleNewChat = () => {
+  const handleNewChat = useCallback(() => {
     setMessages([])
     closeArtifact()
     router.push('/')
-  }
+  }, [setMessages, closeArtifact, router])
 
-  const isToolInvocationInProgress = () => {
+  const isToolInvocationInProgress = useCallback(() => {
     if (!messages.length) return false
     const lastMessage = messages[messages.length - 1]
     if (lastMessage.role !== 'assistant' || !lastMessage.parts) return false
@@ -78,16 +81,17 @@ export function LegalMentorChatPanel({
       lastPart?.type === 'tool-invocation' &&
       lastPart?.toolInvocation?.state === 'call'
     )
-  }
+  }, [messages])
 
   useEffect(() => {
     if (isFirstRender.current && query && query.trim().length > 0) {
       append({ role: 'user', content: query })
       isFirstRender.current = false
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [query])
 
-  const handleScrollToBottom = () => {
+  const handleScrollToBottom = useCallback(() => {
     const scrollContainer = scrollContainerRef.current
     if (scrollContainer) {
       scrollContainer.scrollTo({
@@ -95,7 +99,7 @@ export function LegalMentorChatPanel({
         behavior: 'smooth'
       })
     }
-  }
+  }, [scrollContainerRef])
 
   return (
     <div
@@ -120,8 +124,8 @@ export function LegalMentorChatPanel({
                 How can I assist with your legal research today?
               </h1>
               <p className="text-muted-foreground text-lg max-w-2xl">
-                Ask me about contracts, case law, regulations, or any legal matter. 
-                I'll provide comprehensive analysis with proper citations.
+                Ask me about contracts, case law, regulations, or any legal matter.
+                I&apos;ll provide comprehensive analysis with proper citations.
               </p>
               <div className="flex items-center justify-center gap-4 text-sm text-blue-600 dark:text-blue-400">
                 <div className="flex items-center gap-2">

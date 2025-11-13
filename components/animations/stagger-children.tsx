@@ -1,7 +1,8 @@
 'use client'
 
-import { animated, useTrail } from '@react-spring/web'
 import { Children, ReactNode, useEffect, useState } from 'react'
+
+import { animated, useTrail } from '@react-spring/web'
 
 interface StaggerChildrenProps {
   children: ReactNode

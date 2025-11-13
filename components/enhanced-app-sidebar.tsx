@@ -1,3 +1,10 @@
+import { Suspense } from 'react'
+import Link from 'next/link'
+
+import { History, Plus, Settings, Sparkles } from 'lucide-react'
+
+import { cn } from '@/lib/utils/index'
+
 import {
     Sidebar,
     SidebarContent,
@@ -9,15 +16,12 @@ import {
     SidebarRail,
     SidebarTrigger
 } from '@/components/ui/sidebar'
-import { cn } from '@/lib/utils/index'
-import { History, Plus, Settings, Sparkles } from 'lucide-react'
-import Link from 'next/link'
-import { Suspense } from 'react'
-import { FadeIn, SlideIn } from './animations'
+
 import { ChatHistorySection } from './sidebar/chat-history-section'
 import { ChatHistorySkeleton } from './sidebar/chat-history-skeleton'
 import { Button } from './ui/button'
 import { IconLogo } from './ui/icons'
+import { FadeIn, SlideIn } from './animations'
 
 export default function EnhancedAppSidebar() {
   return (

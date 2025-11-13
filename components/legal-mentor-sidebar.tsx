@@ -1,3 +1,11 @@
+import { Suspense } from 'react'
+import Link from 'next/link'
+
+import { BookOpen, FileText, Plus, Scale, Search, Shield } from 'lucide-react'
+
+import { useBrandConfig } from '@/lib/branding/config'
+import { cn } from '@/lib/utils/index'
+
 import {
     Sidebar,
     SidebarContent,
@@ -9,16 +17,12 @@ import {
     SidebarRail,
     SidebarTrigger
 } from '@/components/ui/sidebar'
-import { useBrandConfig } from '@/lib/branding/config'
-import { cn } from '@/lib/utils/index'
-import { BookOpen, FileText, Plus, Scale, Search, Shield } from 'lucide-react'
-import Link from 'next/link'
-import { Suspense } from 'react'
-import { FadeIn, SlideIn } from './animations'
+
 import { ChatHistorySection } from './sidebar/chat-history-section'
 import { ChatHistorySkeleton } from './sidebar/chat-history-skeleton'
 import { Button } from './ui/button'
 import { LegalMentorLogo } from './ui/legal-icons'
+import { FadeIn, SlideIn } from './animations'
 
 export default function LegalMentorSidebar() {
   const brandConfig = useBrandConfig()
