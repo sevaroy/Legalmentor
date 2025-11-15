@@ -12,7 +12,7 @@ import { Input } from '@/components/ui/input'
 
 interface QuestionConfirmationProps {
   toolInvocation: ToolInvocation
-  onConfirm: (toolCallId: string, approved: boolean, response?: any) => void
+  onConfirm: (toolCallId: string, approved: boolean, response?: unknown) => void
   isCompleted?: boolean
 }
 

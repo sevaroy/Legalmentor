@@ -1,6 +1,6 @@
 'use client'
 
-// import Link from 'next/link' // No longer needed directly here for Sign In button
+import Link from 'next/link'
 import React from 'react'
 
 import { User } from '@supabase/supabase-js'

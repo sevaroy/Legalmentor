@@ -24,7 +24,7 @@ interface EnhancedChatPanelProps {
   setMessages: (messages: Message[]) => void
   query?: string
   stop: () => void
-  append: (message: any) => void
+  append: (message: Message | Pick<Message, 'role' | 'content'>) => void
   models?: Model[]
   showScrollToBottomButton: boolean
   scrollContainerRef: React.RefObject<HTMLDivElement>

@@ -15,7 +15,7 @@ interface RenderMessageProps {
   onOpenChange: (id: string, open: boolean) => void
   onQuerySelect: (query: string) => void
   chatId?: string
-  addToolResult?: (params: { toolCallId: string; result: any }) => void
+  addToolResult?: (params: { toolCallId: string; result: unknown }) => void
   onUpdateMessage?: (messageId: string, newContent: string) => Promise<void>
   reload?: (
     messageId: string,

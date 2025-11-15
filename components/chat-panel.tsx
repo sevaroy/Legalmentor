@@ -26,7 +26,7 @@ interface ChatPanelProps {
   setMessages: (messages: Message[]) => void
   query?: string
   stop: () => void
-  append: (message: any) => void
+  append: (message: Message | Pick<Message, 'role' | 'content'>) => void
   models?: Model[]
   /** Whether to show the scroll to bottom button */
   showScrollToBottomButton: boolean

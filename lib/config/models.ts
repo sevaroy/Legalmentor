@@ -53,11 +53,12 @@ export async function getModels(): Promise<Model[]> {
         console.log('Successfully loaded models from URL')
         return config.models
       }
-    } catch (error: any) {
+    } catch (error: unknown) {
       // Fallback to default models if fetch fails
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error'
       console.warn(
         'Fetch failed, falling back to default models:',
-        error.message || 'Unknown error'
+        errorMessage
       )
 
       if (

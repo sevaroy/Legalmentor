@@ -20,7 +20,7 @@ interface AnimatedChatMessagesProps {
   onQuerySelect: (query: string) => void
   isLoading: boolean
   chatId?: string
-  addToolResult?: (params: { toolCallId: string; result: any }) => void
+  addToolResult?: (params: { toolCallId: string; result: unknown }) => void
   scrollContainerRef: React.RefObject<HTMLDivElement>
   onUpdateMessage?: (messageId: string, newContent: string) => Promise<void>
   reload?: (messageId: string, options?: ChatRequestOptions) => Promise<string | null | undefined>

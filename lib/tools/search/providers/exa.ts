@@ -4,6 +4,13 @@ import { SearchResults } from '@/lib/types'
 
 import { BaseSearchProvider } from './base'
 
+interface ExaResult {
+  title: string | null
+  url: string
+  highlight?: string
+  text?: string
+}
+
 export class ExaSearchProvider extends BaseSearchProvider {
   async search(
     query: string,
@@ -24,10 +31,10 @@ export class ExaSearchProvider extends BaseSearchProvider {
     })
 
     return {
-      results: exaResults.results.map((result: any) => ({
-        title: result.title,
+      results: exaResults.results.map((result: ExaResult) => ({
+        title: result.title || 'Untitled',
         url: result.url,
-        content: result.highlight || result.text
+        content: result.highlight || result.text || ''
       })),
       query,
       images: [],

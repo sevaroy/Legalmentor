@@ -23,7 +23,7 @@ interface ChatMessagesProps {
   onQuerySelect: (query: string) => void
   isLoading: boolean
   chatId?: string
-  addToolResult?: (params: { toolCallId: string; result: any }) => void
+  addToolResult?: (params: { toolCallId: string; result: unknown }) => void
   /** Ref for the scroll container */
   scrollContainerRef: React.RefObject<HTMLDivElement>
   onUpdateMessage?: (messageId: string, newContent: string) => Promise<void>

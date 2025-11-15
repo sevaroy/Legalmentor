@@ -7,11 +7,16 @@ import RetrieveSection from './retrieve-section'
 import { SearchSection } from './search-section'
 import { VideoSearchSection } from './video-search-section'
 
+interface QuestionResponse {
+  skipped?: boolean
+  [key: string]: unknown
+}
+
 interface ToolSectionProps {
   tool: ToolInvocation
   isOpen: boolean
   onOpenChange: (open: boolean) => void
-  addToolResult?: (params: { toolCallId: string; result: any }) => void
+  addToolResult?: (params: { toolCallId: string; result: unknown }) => void
 }
 
 export function ToolSection({
@@ -28,13 +33,14 @@ export function ToolSection({
         <QuestionConfirmation
           toolInvocation={tool}
           onConfirm={(toolCallId, approved, response) => {
+            const questionResponse = response as QuestionResponse | undefined
             addToolResult({
               toolCallId,
               result: approved
                 ? response
                 : {
                     declined: true,
-                    skipped: response?.skipped,
+                    skipped: questionResponse?.skipped,
                     message: 'User declined this question'
                   }
             })
