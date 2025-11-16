@@ -6,9 +6,9 @@ import { ChatRequestOptions, JSONValue, Message } from 'ai'
 
 import { cn } from '@/lib/utils/index'
 
+import { Spinner } from './ui/spinner'
 import { RenderMessage } from './render-message'
 import { ToolSection } from './tool-section'
-import { Spinner } from './ui/spinner'
 
 // Import section structure interface
 interface ChatSection {
@@ -121,8 +121,11 @@ export function ChatMessages({
     <div
       id="scroll-container"
       ref={scrollContainerRef}
-      role="list"
-      aria-roledescription="chat messages"
+      role="log"
+      aria-live="polite"
+      aria-atomic="false"
+      aria-relevant="additions"
+      aria-label="對話訊息"
       className={cn(
         'relative size-full pt-14',
         sections.length > 0 ? 'flex-1 overflow-y-auto' : ''

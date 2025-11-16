@@ -1,6 +1,6 @@
 'use client'
 
-import { ExternalLink, Scale, Calendar, Building2 } from 'lucide-react'
+import { Building2,Calendar, ExternalLink, Scale } from 'lucide-react'
 
 /**
  * 判決書卡片組件

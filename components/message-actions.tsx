@@ -7,9 +7,9 @@ import { toast } from 'sonner'
 import { CHAT_ID } from '@/lib/constants'
 import { cn } from '@/lib/utils/index'
 
+import { Button } from './ui/button'
 import { ChatShare } from './chat-share'
 import { RetryButton } from './retry-button'
-import { Button } from './ui/button'
 
 interface MessageActionsProps {
   message: string
@@ -52,6 +52,7 @@ export function MessageActions({
         size="icon"
         onClick={handleCopy}
         className="rounded-full"
+        aria-label="複製訊息"
       >
         <Copy size={14} />
       </Button>

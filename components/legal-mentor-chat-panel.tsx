@@ -1,20 +1,23 @@
 'use client'
 
+import { useEffect, useRef, useState } from 'react'
+import Textarea from 'react-textarea-autosize'
+import { useRouter } from 'next/navigation'
+
+import { Message } from 'ai'
+import { ArrowUp, ChevronDown, MessageCirclePlus, Scale, Shield, Square } from 'lucide-react'
+
 import { useBrandConfig } from '@/lib/branding/config'
 import { Model } from '@/lib/types/models'
 import { cn } from '@/lib/utils/index'
-import { Message } from 'ai'
-import { ArrowUp, ChevronDown, MessageCirclePlus, Scale, Shield, Square } from 'lucide-react'
-import { useRouter } from 'next/navigation'
-import { useEffect, useRef, useState } from 'react'
-import Textarea from 'react-textarea-autosize'
-import { FadeIn, SlideIn } from './animations'
+
 import { useArtifact } from './artifact/artifact-context'
+import { Button } from './ui/button'
+import { LegalMentorLogo } from './ui/legal-icons'
+import { FadeIn, SlideIn } from './animations'
 import { LegalMentorEmptyScreen } from './legal-mentor-empty-screen'
 import { ModelSelector } from './model-selector'
 import { SearchModeToggle } from './search-mode-toggle'
-import { Button } from './ui/button'
-import { LegalMentorLogo } from './ui/legal-icons'
 
 interface LegalMentorChatPanelProps {
   input: string
@@ -85,6 +88,7 @@ export function LegalMentorChatPanel({
       append({ role: 'user', content: query })
       isFirstRender.current = false
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [query])
 
   const handleScrollToBottom = () => {
@@ -154,6 +158,7 @@ export function LegalMentorChatPanel({
               className="absolute -top-12 right-4 z-20 size-10 rounded-full shadow-lg border-2 bg-blue-50/80 dark:bg-blue-950/80 backdrop-blur-sm hover:bg-blue-100 dark:hover:bg-blue-900 hover:scale-110 transition-all border-blue-200 dark:border-blue-800"
               onClick={handleScrollToBottom}
               title="Scroll to bottom"
+              aria-label="捲動至底部"
             >
               <ChevronDown size={18} className="text-blue-600 dark:text-blue-400" />
             </Button>
@@ -239,6 +244,7 @@ export function LegalMentorChatPanel({
                   type="button"
                   disabled={isLoading || isToolInvocationInProgress()}
                   title="Start new legal research"
+                  aria-label="開始新的對話"
                 >
                   <MessageCirclePlus className="size-4 group-hover:rotate-12 transition-transform text-blue-600 dark:text-blue-400" />
                 </Button>
@@ -250,8 +256,8 @@ export function LegalMentorChatPanel({
                 variant={'default'}
                 className={cn(
                   'rounded-full transition-all duration-300',
-                  isLoading 
-                    ? 'bg-red-600 hover:bg-red-700 dark:bg-red-700 dark:hover:bg-red-800' 
+                  isLoading
+                    ? 'bg-red-600 hover:bg-red-700 dark:bg-red-700 dark:hover:bg-red-800'
                     : 'bg-blue-600 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-800 hover:scale-110',
                   input.length > 0 && !isLoading && 'shadow-lg shadow-blue-500/30'
                 )}
@@ -261,6 +267,7 @@ export function LegalMentorChatPanel({
                 }
                 onClick={isLoading ? stop : undefined}
                 title={isLoading ? 'Stop legal analysis' : 'Start legal research'}
+                aria-label={isLoading ? '停止生成' : '送出訊息'}
               >
                 {isLoading ? (
                   <Square size={18} className="animate-pulse" />

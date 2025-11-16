@@ -7,8 +7,8 @@ import { Pencil } from 'lucide-react'
 
 import { cn } from '@/lib/utils/index'
 
-import { CollapsibleMessage } from './collapsible-message'
 import { Button } from './ui/button'
+import { CollapsibleMessage } from './collapsible-message'
 
 type UserMessageProps = {
   message: string

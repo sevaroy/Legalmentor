@@ -13,6 +13,7 @@ import { cn } from '@/lib/utils/index'
 
 import BrandAwareChatPanel from './brand-aware-chat-panel'
 import { ChatMessages } from './chat-messages'
+import { ChatErrorBoundary } from './error-boundary'
 
 // Define section structure
 interface ChatSection {
@@ -47,7 +48,8 @@ export function Chat({
     data,
     setData,
     addToolResult,
-    reload
+    reload,
+    error
   } = useChat({
     initialMessages: savedMessages,
     id: CHAT_ID,
@@ -57,9 +59,13 @@ export function Chat({
     onFinish: () => {
       window.history.replaceState({}, '', `/search/${id}`)
       window.dispatchEvent(new CustomEvent('chat-history-updated'))
+      toast.success('回應完成', { duration: 2000 })
     },
     onError: error => {
-      toast.error(`Error in chat: ${error.message}`)
+      toast.error(`錯誤：${error.message}`, {
+        duration: 5000,
+        description: '請檢查您的網路連線或稍後再試'
+      })
     },
     sendExtraMessageFields: false, // Disable extra message fields,
     experimental_throttle: 100
@@ -174,7 +180,9 @@ export function Chat({
       })
     } catch (error) {
       console.error('Failed to reload after message update:', error)
-      toast.error(`Failed to reload conversation: ${(error as Error).message}`)
+      toast.error(`重新載入失敗：${(error as Error).message}`, {
+        duration: 5000
+      })
     }
   }
 
@@ -203,38 +211,40 @@ export function Chat({
   }
 
   return (
-    <div
-      className={cn(
-        'relative flex h-full min-w-0 flex-1 flex-col',
-        messages.length === 0 ? 'items-center justify-center' : ''
-      )}
-      data-testid="full-chat"
-    >
-      <ChatMessages
-        sections={sections}
-        data={data}
-        onQuerySelect={onQuerySelect}
-        isLoading={isLoading}
-        chatId={id}
-        addToolResult={addToolResult}
-        scrollContainerRef={scrollContainerRef}
-        onUpdateMessage={handleUpdateAndReloadMessage}
-        reload={handleReloadFrom}
-      />
-      <BrandAwareChatPanel
-        input={input}
-        handleInputChange={handleInputChange}
-        handleSubmit={onSubmit}
-        isLoading={isLoading}
-        messages={messages}
-        setMessages={setMessages}
-        stop={stop}
-        query={query}
-        append={append}
-        models={models}
-        showScrollToBottomButton={!isAtBottom}
-        scrollContainerRef={scrollContainerRef}
-      />
-    </div>
+    <ChatErrorBoundary>
+      <div
+        className={cn(
+          'relative flex h-full min-w-0 flex-1 flex-col',
+          messages.length === 0 ? 'items-center justify-center' : ''
+        )}
+        data-testid="full-chat"
+      >
+        <ChatMessages
+          sections={sections}
+          data={data}
+          onQuerySelect={onQuerySelect}
+          isLoading={isLoading}
+          chatId={id}
+          addToolResult={addToolResult}
+          scrollContainerRef={scrollContainerRef}
+          onUpdateMessage={handleUpdateAndReloadMessage}
+          reload={handleReloadFrom}
+        />
+        <BrandAwareChatPanel
+          input={input}
+          handleInputChange={handleInputChange}
+          handleSubmit={onSubmit}
+          isLoading={isLoading}
+          messages={messages}
+          setMessages={setMessages}
+          stop={stop}
+          query={query}
+          append={append}
+          models={models}
+          showScrollToBottomButton={!isAtBottom}
+          scrollContainerRef={scrollContainerRef}
+        />
+      </div>
+    </ChatErrorBoundary>
   )
 }

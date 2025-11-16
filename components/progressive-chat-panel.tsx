@@ -1,6 +1,7 @@
 'use client'
 
 import { withFeatureFlag } from '@/lib/feature-flags'
+
 import { ChatPanel } from './chat-panel'
 import { EnhancedChatPanel } from './enhanced-chat-panel'
 

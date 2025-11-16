@@ -1,8 +1,10 @@
 'use client'
 
-import { cn } from '@/lib/utils/index'
-import { animated, useSpring } from '@react-spring/web'
 import { ReactNode, useEffect, useState } from 'react'
+
+import { animated, useSpring } from '@react-spring/web'
+
+import { cn } from '@/lib/utils/index'
 
 // AI 思考動畫
 export function AIThinkingAnimation({ className }: { className?: string }) {

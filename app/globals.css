@@ -113,3 +113,37 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* 橫屏模式優化 */
+@media (orientation: landscape) and (max-height: 600px) {
+  /* 減少 header 高度 */
+  header {
+    padding: 0.25rem 0.5rem;
+  }
+
+  /* 優化輸入框區域 */
+  .chat-input-container {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 40;
+  }
+
+  /* 調整滾動容器高度 */
+  #scroll-container {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+  }
+
+  /* 減少 logo 和標題大小 */
+  .legal-mentor-logo {
+    width: 3rem;
+    height: 3rem;
+  }
+
+  /* 緊湊的按鈕間距 */
+  .chat-section {
+    margin-bottom: 1rem;
+  }
+}

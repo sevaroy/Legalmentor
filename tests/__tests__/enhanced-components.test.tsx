@@ -4,6 +4,7 @@
  */
 
 import { fireEvent, render, screen, waitFor } from '@testing-library/react'
+
 import { EnhancedAppSidebar } from '../enhanced-app-sidebar'
 import { EnhancedChatPanel } from '../enhanced-chat-panel'
 import { EnhancedEmptyScreen } from '../enhanced-empty-screen'
