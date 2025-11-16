@@ -1,0 +1,121 @@
+{
+  "common": {
+    "email": "電子郵件",
+    "password": "密碼",
+    "or": "或",
+    "backToHome": "返回首頁",
+    "cancel": "取消",
+    "clear": "清除",
+    "loading": "載入中...",
+    "sending": "傳送中...",
+    "searchPlaceholder": "搜尋..."
+  },
+  "auth": {
+    "login": {
+      "title": "歡迎回來",
+      "description": "登入您的帳號",
+      "signIn": "登入",
+      "signInWithGoogle": "使用 Google 登入",
+      "forgotPassword": "忘記密碼？",
+      "noAccount": "還沒有帳號？",
+      "signUp": "註冊",
+      "loggingIn": "登入中...",
+      "emailPlaceholder": "you@example.com",
+      "passwordPlaceholder": "********"
+    },
+    "signUp": {
+      "title": "建立帳號",
+      "description": "輸入您的資料以開始使用",
+      "repeatPassword": "確認密碼",
+      "signUp": "註冊",
+      "creatingAccount": "建立帳號中...",
+      "alreadyHaveAccount": "已經有帳號了？",
+      "signIn": "登入",
+      "passwordsDoNotMatch": "密碼不符",
+      "emailPlaceholder": "you@example.com",
+      "passwordPlaceholder": "********"
+    },
+    "forgotPassword": {
+      "title": "重設密碼",
+      "description": "輸入您的電子郵件，我們將寄送重設密碼的連結給您",
+      "sendResetEmail": "傳送重設郵件",
+      "sending": "傳送中...",
+      "alreadyHaveAccount": "已經有帳號了？",
+      "login": "登入",
+      "checkEmail": "檢查您的電子郵件",
+      "resetInstructionsSent": "密碼重設指示已傳送",
+      "resetEmailDescription": "如果您使用電子郵件和密碼註冊，您將收到密碼重設郵件。",
+      "emailPlaceholder": "m@example.com"
+    },
+    "updatePassword": {
+      "title": "更新密碼",
+      "description": "輸入您的新密碼",
+      "newPassword": "新密碼",
+      "repeatPassword": "確認新密碼",
+      "updatePassword": "更新密碼",
+      "updating": "更新中...",
+      "passwordsDoNotMatch": "密碼不符",
+      "passwordUpdated": "密碼已更新",
+      "redirecting": "重新導向中...",
+      "passwordPlaceholder": "********"
+    },
+    "signUpSuccess": {
+      "title": "感謝您註冊！",
+      "description": "請檢查您的電子郵件以驗證帳號",
+      "checkEmailDescription": "我們已寄送驗證郵件至您的信箱。請點擊郵件中的連結以完成註冊。",
+      "backToLogin": "返回登入頁面"
+    },
+    "error": {
+      "title": "抱歉，發生錯誤",
+      "description": "處理您的請求時發生錯誤",
+      "backToHome": "返回首頁"
+    }
+  },
+  "sidebar": {
+    "new": "新對話",
+    "history": "歷史記錄",
+    "clearHistory": "清除歷史",
+    "noHistory": "無搜尋歷史"
+  },
+  "userMenu": {
+    "theme": "主題",
+    "links": "連結",
+    "logout": "登出",
+    "signIn": "登入",
+    "openMenu": "開啟選單"
+  },
+  "theme": {
+    "light": "淺色",
+    "dark": "深色",
+    "system": "系統"
+  },
+  "model": {
+    "select": "選擇模型",
+    "search": "搜尋模型...",
+    "notFound": "找不到模型"
+  },
+  "clearHistory": {
+    "title": "您確定要清除歷史記錄嗎？",
+    "description": "此操作無法復原。這將永久刪除您的歷史記錄，並從我們的伺服器中移除您的資料。",
+    "cancel": "取消",
+    "clear": "清除",
+    "success": "歷史記錄已清除",
+    "button": "清除歷史"
+  },
+  "search": {
+    "toggleSearchMode": "切換搜尋模式",
+    "search": "搜尋",
+    "sources": "來源",
+    "openDetails": "開啟詳細資訊"
+  },
+  "branding": {
+    "appName": "Legal Mentor",
+    "appDescription": "AI 驅動的法律研究助理"
+  },
+  "toast": {
+    "error": "發生錯誤",
+    "success": "操作成功",
+    "failedToLoadHistory": "無法載入聊天歷史記錄",
+    "failedToLoadMoreHistory": "無法載入更多聊天歷史記錄"
+  }
+}
