@@ -1,0 +1,13 @@
+{
+  "scripts": {
+    "dev": "next dev --turbo",
+    "build": "ESLINT_NO_DEV_ERRORS=true next build",
+    "build:strict": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "typecheck": "tsc --noEmit",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "test:search": "tsx scripts/test-legal-search.ts"
+  }
+}

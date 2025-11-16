@@ -6,7 +6,7 @@ import {
   streamText
 } from 'ai'
 
-import { researcher } from '@/lib/agents/researcher'
+import { legalAgent } from '@/lib/agents/legal-agent'
 
 import { getMaxAllowedTokens, truncateMessages } from '../utils/context-window'
 import { isReasoningModel } from '../utils/registry'
@@ -40,7 +40,7 @@ export function createToolCallingStreamResponse(config: BaseStreamConfig) {
           getMaxAllowedTokens(model)
         )
 
-        let researcherConfig = await researcher({
+        let researcherConfig = legalAgent({
           messages: truncatedMessages,
           model: modelId,
           searchMode

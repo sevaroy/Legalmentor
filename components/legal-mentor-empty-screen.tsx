@@ -5,45 +5,45 @@ import { FadeIn, StaggerChildren } from './animations'
 
 const legalExampleMessages = [
   {
-    heading: 'Analyze this employment contract',
-    message: 'Please analyze this employment contract for potential issues and standard clauses',
-    icon: FileText,
-    category: 'Contract Law',
+    heading: '車禍受傷可以請求什麼賠償？',
+    message: '我在車禍中受傷了，可以向對方請求哪些賠償？需要準備什麼證據？',
+    icon: Gavel,
+    category: '民事損害賠償',
     color: 'text-blue-600 dark:text-blue-400'
   },
   {
-    heading: 'Research intellectual property case law',
-    message: 'Find recent case law on software patent infringement in the 9th Circuit',
-    icon: Search,
-    category: 'IP Law',
+    heading: '租屋糾紛怎麼處理？',
+    message: '房東不退還押金，我該怎麼辦？有什麼法律途徑可以解決？',
+    icon: FileText,
+    category: '租賃糾紛',
     color: 'text-green-600 dark:text-green-400'
   },
   {
-    heading: 'GDPR compliance requirements',
-    message: 'What are the key GDPR compliance requirements for data processing?',
-    icon: Shield,
-    category: 'Privacy Law',
+    heading: '勞資糾紛如何維權？',
+    message: '公司無預警資遣我，沒有給資遣費，我可以主張什麼權利？',
+    icon: Users,
+    category: '勞動法',
     color: 'text-purple-600 dark:text-purple-400'
   },
   {
-    heading: 'Corporate merger regulations',
-    message: 'Explain the regulatory requirements for a corporate merger in Delaware',
-    icon: Users,
-    category: 'Corporate Law',
+    heading: '消費糾紛退款問題',
+    message: '網購商品有瑕疵，賣家不處理，我可以要求退款嗎？',
+    icon: Shield,
+    category: '消費者保護',
     color: 'text-amber-600 dark:text-amber-400'
   },
   {
-    heading: 'Criminal procedure analysis',
-    message: 'Analyze the Fourth Amendment implications of digital searches',
-    icon: Gavel,
-    category: 'Criminal Law',
+    heading: '遺產繼承順序與比例',
+    message: '父親過世沒有留遺囑，遺產要怎麼分配？繼承順序是什麼？',
+    icon: Scale,
+    category: '繼承法',
     color: 'text-red-600 dark:text-red-400'
   },
   {
-    heading: 'Legal research methodology',
-    message: 'How to conduct comprehensive legal research on environmental regulations',
-    icon: BookOpen,
-    category: 'Research',
+    heading: '查詢相關判決案例',
+    message: '我想查詢類似的判決案例，看看法院通常怎麼判？',
+    icon: Search,
+    category: '判決書查詢',
     color: 'text-teal-600 dark:text-teal-400'
   }
 ]
@@ -66,11 +66,11 @@ export function LegalMentorEmptyScreen({
             <div className="flex items-center justify-center gap-2 mb-3">
               <Scale className="size-6 text-blue-600 dark:text-blue-400" />
               <h2 className="text-xl font-semibold bg-gradient-to-r from-blue-600 to-blue-800 dark:from-blue-400 dark:to-blue-600 bg-clip-text text-transparent">
-                Legal Research Examples
+                常見法律問題
               </h2>
             </div>
             <p className="text-sm text-blue-600/70 dark:text-blue-400/70">
-              Click on any example below to start your legal research
+              點擊下方問題開始諮詢，或直接輸入您的問題
             </p>
           </div>
 
@@ -114,24 +114,24 @@ export function LegalMentorEmptyScreen({
           <div className="mt-6 pt-4 border-t border-blue-200/30 dark:border-blue-800/30">
             <div className="flex items-center justify-center space-x-2 text-xs text-blue-600/70 dark:text-blue-400/70 mb-2">
               <Scale className="size-3" />
-              <span>Professional legal research powered by AI</span>
+              <span>AI 驅動的智能法律助理 · 整合司法院判決書系統</span>
               <Scale className="size-3" />
             </div>
             <div className="text-center">
               <div className="inline-flex items-center gap-4 text-xs text-muted-foreground">
                 <div className="flex items-center gap-1">
                   <Shield className="size-3 text-green-500" />
-                  <span>Confidential</span>
+                  <span>隱私保護</span>
                 </div>
                 <div className="w-1 h-1 bg-muted-foreground rounded-full" />
                 <div className="flex items-center gap-1">
                   <FileText className="size-3 text-blue-500" />
-                  <span>Cited Sources</span>
+                  <span>引用來源</span>
                 </div>
                 <div className="w-1 h-1 bg-muted-foreground rounded-full" />
                 <div className="flex items-center gap-1">
                   <Gavel className="size-3 text-purple-500" />
-                  <span>Professional Grade</span>
+                  <span>判決案例</span>
                 </div>
               </div>
             </div>
