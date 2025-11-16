@@ -1,5 +1,7 @@
-import { Button } from '@/components/ui/button'
 import { ArrowRight, FileText, Globe, Sparkles, TrendingUp } from 'lucide-react'
+
+import { Button } from '@/components/ui/button'
+
 import { FadeIn, StaggerChildren } from './animations'
 
 const exampleMessages = [

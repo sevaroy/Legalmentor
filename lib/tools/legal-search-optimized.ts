@@ -502,4 +502,4 @@ export const quickLegalSearchTool = createQuickLegalSearchTool(
 )
 
 // 保留舊版本以向後相容
-export { createLegalSearchTool, createJudgmentOnlySearchTool } from './legal-search'
+export { createJudgmentOnlySearchTool,createLegalSearchTool } from './legal-search'

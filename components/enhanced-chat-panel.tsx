@@ -1,19 +1,22 @@
 'use client'
 
-import { Model } from '@/lib/types/models'
-import { cn } from '@/lib/utils/index'
-import { Message } from 'ai'
-import { ArrowUp, ChevronDown, MessageCirclePlus, Sparkles, Square } from 'lucide-react'
-import { useRouter } from 'next/navigation'
 import { useEffect, useRef, useState } from 'react'
 import Textarea from 'react-textarea-autosize'
-import { FadeIn, SlideIn } from './animations'
+import { useRouter } from 'next/navigation'
+
+import { Message } from 'ai'
+import { ArrowUp, ChevronDown, MessageCirclePlus, Sparkles, Square } from 'lucide-react'
+
+import { Model } from '@/lib/types/models'
+import { cn } from '@/lib/utils/index'
+
 import { useArtifact } from './artifact/artifact-context'
+import { Button } from './ui/button'
+import { IconLogo } from './ui/icons'
+import { FadeIn, SlideIn } from './animations'
 import { EmptyScreen } from './empty-screen'
 import { ModelSelector } from './model-selector'
 import { SearchModeToggle } from './search-mode-toggle'
-import { Button } from './ui/button'
-import { IconLogo } from './ui/icons'
 
 interface EnhancedChatPanelProps {
   input: string
@@ -83,6 +86,7 @@ export function EnhancedChatPanel({
       append({ role: 'user', content: query })
       isFirstRender.current = false
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [query])
 
   const handleScrollToBottom = () => {
@@ -116,7 +120,7 @@ export function EnhancedChatPanel({
                 How can I help you today?
               </h1>
               <p className="text-muted-foreground text-lg">
-                Ask me anything, and I'll search and analyze to give you the best answer
+                Ask me anything, and I&apos;ll search and analyze to give you the best answer
               </p>
             </div>
           </div>

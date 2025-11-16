@@ -1,16 +1,15 @@
 import { CoreMessage, smoothStream, streamText } from 'ai'
 
-import { createQuestionTool } from '../tools/question'
-import { retrieveTool } from '../tools/retrieve'
-import { createSearchTool } from '../tools/search'
 import {
   createGetJudgmentTool,
   createJudgmentSearchTool
 } from '../tools/judgment-search'
 import {
-  createLegalSearchTool,
-  createJudgmentOnlySearchTool
-} from '../tools/legal-search'
+  createJudgmentOnlySearchTool,
+  createLegalSearchTool} from '../tools/legal-search'
+import { createQuestionTool } from '../tools/question'
+import { retrieveTool } from '../tools/retrieve'
+import { createSearchTool } from '../tools/search'
 import { getModel } from '../utils/registry'
 
 /**

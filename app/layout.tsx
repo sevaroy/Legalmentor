@@ -69,12 +69,27 @@ export default async function RootLayout({
 
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        <link
+          rel="preload"
+          href="/_next/static/media/inter-var.woff2"
+          as="font"
+          type="font/woff2"
+          crossOrigin="anonymous"
+        />
+      </head>
       <body
         className={cn(
           'min-h-screen flex flex-col font-sans antialiased',
           fontSans.variable
         )}
       >
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:p-4 focus:bg-background focus:text-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:rounded-md focus:m-2"
+        >
+          跳至主要內容
+        </a>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
@@ -85,7 +100,7 @@ export default async function RootLayout({
             <BrandAwareSidebar />
             <div className="flex flex-col flex-1">
               <Header user={user} />
-              <main className="flex flex-1 min-h-0">
+              <main id="main-content" className="flex flex-1 min-h-0">
                 <ArtifactRoot>{children}</ArtifactRoot>
               </main>
             </div>

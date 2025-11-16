@@ -1,6 +1,9 @@
-import { Button } from '@/components/ui/button'
-import { useBrandConfig } from '@/lib/branding/config'
 import { ArrowRight, BookOpen, FileText, Gavel, Scale, Search, Shield, Users } from 'lucide-react'
+
+import { useBrandConfig } from '@/lib/branding/config'
+
+import { Button } from '@/components/ui/button'
+
 import { FadeIn, StaggerChildren } from './animations'
 
 const legalExampleMessages = [
