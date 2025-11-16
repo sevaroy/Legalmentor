@@ -1,6 +1,7 @@
 'use client'
 
 import { useCallback, useEffect, useRef, useState, useTransition } from 'react'
+import { useTranslations } from 'next-intl'
 
 import { toast } from 'sonner'
 
@@ -24,6 +25,8 @@ interface ChatPageResponse {
 }
 
 export function ChatHistoryClient() {
+  const t = useTranslations('sidebar')
+  const tToast = useTranslations('toast')
   // Removed props from function signature
   const [chats, setChats] = useState<Chat[]>([])
   const [nextOffset, setNextOffset] = useState<number | null>(null)
@@ -45,12 +48,12 @@ export function ChatHistoryClient() {
       setNextOffset(newNextOffset)
     } catch (error) {
       console.error('Failed to load initial chats:', error)
-      toast.error('Failed to load chat history.')
+      toast.error(tToast('failedToLoadHistory'))
       setNextOffset(null)
     } finally {
       setIsLoading(false)
     }
-  }, [])
+  }, [tToast])
 
   useEffect(() => {
     fetchInitialChats()
@@ -84,12 +87,12 @@ export function ChatHistoryClient() {
       setNextOffset(newNextOffset)
     } catch (error) {
       console.error('Failed to load more chats:', error)
-      toast.error('Failed to load more chat history.')
+      toast.error(tToast('failedToLoadMoreHistory'))
       setNextOffset(null)
     } finally {
       setIsLoading(false)
     }
-  }, [nextOffset, isLoading])
+  }, [nextOffset, isLoading, tToast])
 
   useEffect(() => {
     const observerRefValue = loadMoreRef.current
@@ -119,14 +122,14 @@ export function ChatHistoryClient() {
     <div className="flex flex-col flex-1 h-full">
       <SidebarGroup>
         <div className="flex items-center justify-between w-full">
-          <SidebarGroupLabel className="p-0">History</SidebarGroupLabel>
+          <SidebarGroupLabel className="p-0">{t('history')}</SidebarGroupLabel>
           <ClearHistoryAction empty={isHistoryEmpty} />
         </div>
       </SidebarGroup>
       <div className="flex-1 overflow-y-auto mb-2 relative">
         {isHistoryEmpty && !isPending ? (
           <div className="px-2 text-foreground/30 text-sm text-center py-4">
-            No search history
+            {t('noHistory')}
           </div>
         ) : (
           <SidebarMenu>

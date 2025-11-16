@@ -1,5 +1,8 @@
+'use client'
+
 import { Suspense } from 'react'
 import Link from 'next/link'
+import { useTranslations } from 'next-intl'
 
 import { Plus } from 'lucide-react'
 
@@ -21,6 +24,8 @@ import { ChatHistorySkeleton } from './sidebar/chat-history-skeleton'
 import { IconLogo } from './ui/icons'
 
 export default function AppSidebar() {
+  const t = useTranslations('sidebar')
+
   return (
     <Sidebar side="left" variant="sidebar" collapsible="offcanvas">
       <SidebarHeader className="flex flex-row justify-between items-center">
@@ -36,7 +41,7 @@ export default function AppSidebar() {
             <SidebarMenuButton asChild>
               <Link href="/" className="flex items-center gap-2">
                 <Plus className="size-4" />
-                <span>New</span>
+                <span>{t('new')}</span>
               </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>

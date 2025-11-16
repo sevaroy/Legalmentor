@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import Image from 'next/image'
+import { useTranslations } from 'next-intl'
 
 import { Check, ChevronsUpDown, Lightbulb } from 'lucide-react'
 
@@ -43,6 +44,7 @@ interface ModelSelectorProps {
 }
 
 export function ModelSelector({ models }: ModelSelectorProps) {
+  const t = useTranslations('model')
   const [open, setOpen] = useState(false)
   const [value, setValue] = useState('')
 
@@ -101,16 +103,16 @@ export function ModelSelector({ models }: ModelSelectorProps) {
               )}
             </div>
           ) : (
-            'Select model'
+            t('select')
           )}
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-72 p-0" align="start">
         <Command>
-          <CommandInput placeholder="Search models..." />
+          <CommandInput placeholder={t('search')} />
           <CommandList>
-            <CommandEmpty>No model found.</CommandEmpty>
+            <CommandEmpty>{t('notFound')}</CommandEmpty>
             {Object.entries(groupedModels).map(([provider, models]) => (
               <CommandGroup key={provider} heading={provider}>
                 {models.map(model => {

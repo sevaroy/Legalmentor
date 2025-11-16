@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import { useTranslations } from 'next-intl'
 
 import {
   Link2,
@@ -25,26 +26,28 @@ import { ExternalLinkItems } from './external-link-items'
 import { ThemeMenuItems } from './theme-menu-items'
 
 export default function GuestMenu() {
+  const t = useTranslations('userMenu')
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" size="icon">
           <Settings2 className="h-5 w-5" /> {/* Choose an icon */}
-          <span className="sr-only">Open menu</span>
+          <span className="sr-only">{t('openMenu')}</span>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56" align="end" forceMount>
         <DropdownMenuItem asChild>
           <Link href="/auth/login">
             <LogIn className="mr-2 h-4 w-4" />
-            <span>Sign In</span>
+            <span>{t('signIn')}</span>
           </Link>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuSub>
           <DropdownMenuSubTrigger>
             <Palette className="mr-2 h-4 w-4" />
-            <span>Theme</span>
+            <span>{t('theme')}</span>
           </DropdownMenuSubTrigger>
           <DropdownMenuSubContent>
             <ThemeMenuItems />
@@ -53,7 +56,7 @@ export default function GuestMenu() {
         <DropdownMenuSub>
           <DropdownMenuSubTrigger>
             <Link2 className="mr-2 h-4 w-4" />
-            <span>Links</span>
+            <span>{t('links')}</span>
           </DropdownMenuSubTrigger>
           <DropdownMenuSubContent>
             <ExternalLinkItems />

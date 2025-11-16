@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
+import { useTranslations } from 'next-intl'
 
 import { createClient } from '@/lib/supabase/client'
 import { cn } from '@/lib/utils/index'
@@ -23,6 +24,8 @@ export function SignUpForm({
   className,
   ...props
 }: React.ComponentPropsWithoutRef<'div'>) {
+  const t = useTranslations('auth.signUp')
+  const tCommon = useTranslations('common')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [repeatPassword, setRepeatPassword] = useState('')
@@ -37,7 +40,7 @@ export function SignUpForm({
     setError(null)
 
     if (password !== repeatPassword) {
-      setError('Passwords do not match')
+      setError(t('passwordsDoNotMatch'))
       setIsLoading(false)
       return
     }
@@ -68,21 +71,21 @@ export function SignUpForm({
         <CardHeader className="text-center">
           <CardTitle className="text-2xl flex flex-col items-center justify-center gap-4">
             <IconLogo className="size-12" />
-            Create an account
+            {t('title')}
           </CardTitle>
           <CardDescription>
-            Enter your details below to get started
+            {t('description')}
           </CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSignUp}>
             <div className="flex flex-col gap-4">
               <div className="grid gap-2">
-                <Label htmlFor="email">Email</Label>
+                <Label htmlFor="email">{tCommon('email')}</Label>
                 <Input
                   id="email"
                   type="email"
-                  placeholder="you@example.com"
+                  placeholder={t('emailPlaceholder')}
                   required
                   value={email}
                   onChange={e => setEmail(e.target.value)}
@@ -90,12 +93,12 @@ export function SignUpForm({
               </div>
               <div className="grid gap-2">
                 <div className="flex items-center">
-                  <Label htmlFor="password">Password</Label>
+                  <Label htmlFor="password">{tCommon('password')}</Label>
                 </div>
                 <Input
                   id="password"
                   type="password"
-                  placeholder="********"
+                  placeholder={t('passwordPlaceholder')}
                   required
                   value={password}
                   onChange={e => setPassword(e.target.value)}
@@ -103,12 +106,12 @@ export function SignUpForm({
               </div>
               <div className="grid gap-2">
                 <div className="flex items-center">
-                  <Label htmlFor="repeat-password">Repeat Password</Label>
+                  <Label htmlFor="repeat-password">{t('repeatPassword')}</Label>
                 </div>
                 <Input
                   id="repeat-password"
                   type="password"
-                  placeholder="********"
+                  placeholder={t('passwordPlaceholder')}
                   required
                   value={repeatPassword}
                   onChange={e => setRepeatPassword(e.target.value)}
@@ -116,13 +119,13 @@ export function SignUpForm({
               </div>
               {error && <p className="text-sm text-red-500">{error}</p>}
               <Button type="submit" className="w-full" disabled={isLoading}>
-                {isLoading ? 'Creating account...' : 'Sign Up'}
+                {isLoading ? t('creatingAccount') : t('signUp')}
               </Button>
             </div>
             <div className="mt-6 text-center text-sm">
-              Already have an account?{' '}
+              {t('alreadyHaveAccount')}{' '}
               <Link href="/auth/login" className="underline underline-offset-4">
-                Sign In
+                {t('signIn')}
               </Link>
             </div>
           </form>
@@ -130,7 +133,7 @@ export function SignUpForm({
       </Card>
       <div className="text-center text-xs text-muted-foreground">
         <Link href="/" className="hover:underline">
-          &larr; Back to Home
+          &larr; {tCommon('backToHome')}
         </Link>
       </div>
     </div>
