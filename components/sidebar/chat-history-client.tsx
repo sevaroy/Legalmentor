@@ -120,19 +120,19 @@ export function ChatHistoryClient() {
 
   return (
     <div className="flex flex-col flex-1 h-full">
-      <SidebarGroup>
+      <SidebarGroup className="pb-2">
         <div className="flex items-center justify-between w-full">
-          <SidebarGroupLabel className="p-0">{t('history')}</SidebarGroupLabel>
+          <SidebarGroupLabel className="p-0 text-xs font-semibold tracking-tight">{t('history')}</SidebarGroupLabel>
           <ClearHistoryAction empty={isHistoryEmpty} />
         </div>
       </SidebarGroup>
       <div className="flex-1 overflow-y-auto mb-2 relative">
         {isHistoryEmpty && !isPending ? (
-          <div className="px-2 text-foreground/30 text-sm text-center py-4">
+          <div className="px-3 text-foreground/40 text-sm text-center py-6">
             {t('noHistory')}
           </div>
         ) : (
-          <SidebarMenu>
+          <SidebarMenu className="gap-1">
             {chats.map(
               (chat: Chat) => chat && <ChatMenuItem key={chat.id} chat={chat} />
             )}

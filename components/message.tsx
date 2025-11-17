@@ -38,6 +38,12 @@ export function BotMessage({
         remarkPlugins={[remarkGfm, remarkMath]}
         className={cn(
           'prose-sm prose-neutral prose-a:text-accent-foreground/50',
+          'prose-p:leading-relaxed prose-p:mb-4',
+          'prose-headings:font-semibold prose-headings:tracking-tight',
+          'prose-h1:text-2xl prose-h2:text-xl prose-h3:text-lg',
+          'prose-ul:my-4 prose-ol:my-4 prose-li:my-1',
+          'prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded-md prose-code:bg-muted',
+          'prose-pre:bg-muted prose-pre:border prose-pre:border-border',
           className
         )}
       >
@@ -52,6 +58,12 @@ export function BotMessage({
       remarkPlugins={[remarkGfm]}
       className={cn(
         'prose-sm prose-neutral prose-a:text-accent-foreground/50',
+        'prose-p:leading-relaxed prose-p:mb-4',
+        'prose-headings:font-semibold prose-headings:tracking-tight',
+        'prose-h1:text-2xl prose-h2:text-xl prose-h3:text-lg',
+        'prose-ul:my-4 prose-ol:my-4 prose-li:my-1',
+        'prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded-md prose-code:bg-muted',
+        'prose-pre:bg-muted prose-pre:border prose-pre:border-border',
         className
       )}
       components={{

@@ -124,13 +124,13 @@ export function ChatMenuItem({ chat }: ChatMenuItemProps) {
       <SidebarMenuButton
         asChild
         isActive={isActive}
-        className="h-auto flex-col gap-0.5 items-start p-2 pr-8"
+        className="h-auto flex-col gap-1 items-start p-2.5 pr-9 rounded-lg hover:bg-accent/60 transition-colors"
       >
         <Link href={chat.path}>
-          <div className="text-xs font-medium truncate select-none w-full">
+          <div className="text-xs font-medium truncate select-none w-full leading-tight">
             {chat.title}
           </div>
-          <div className="text-xs text-muted-foreground w-full">
+          <div className="text-[11px] text-muted-foreground/70 w-full">
             {formatDateWithTime(
               chat.createdAt,
               tCommon('today'),

@@ -28,25 +28,25 @@ export default function AppSidebar() {
 
   return (
     <Sidebar side="left" variant="sidebar" collapsible="offcanvas">
-      <SidebarHeader className="flex flex-row justify-between items-center">
-        <Link href="/" className="flex items-center gap-2 px-2 py-3">
-          <IconLogo className={cn('size-5')} />
-          <span className="font-semibold text-sm">Morphic</span>
+      <SidebarHeader className="flex flex-row justify-between items-center border-b border-border/40 pb-3">
+        <Link href="/" className="flex items-center gap-2.5 px-2 py-3 group">
+          <IconLogo className={cn('size-5 transition-transform group-hover:scale-110')} />
+          <span className="font-semibold text-sm tracking-tight">Morphic</span>
         </Link>
         <SidebarTrigger />
       </SidebarHeader>
-      <SidebarContent className="flex flex-col px-2 py-4 h-full">
+      <SidebarContent className="flex flex-col px-3 py-4 h-full gap-3">
         <SidebarMenu>
           <SidebarMenuItem>
-            <SidebarMenuButton asChild>
-              <Link href="/" className="flex items-center gap-2">
+            <SidebarMenuButton asChild className="h-10 font-medium hover:bg-accent/50 transition-colors">
+              <Link href="/" className="flex items-center gap-3">
                 <Plus className="size-4" />
                 <span>{t('new')}</span>
               </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
-        <div className="flex-1 overflow-y-auto">
+        <div className="flex-1 overflow-y-auto -mx-1 px-1">
           <Suspense fallback={<ChatHistorySkeleton />}>
             <ChatHistorySection />
           </Suspense>
