@@ -8,7 +8,9 @@
     "clear": "清除",
     "loading": "載入中...",
     "sending": "傳送中...",
-    "searchPlaceholder": "搜尋..."
+    "searchPlaceholder": "搜尋...",
+    "today": "今天",
+    "yesterday": "昨天"
   },
   "auth": {
     "login": {
@@ -75,7 +77,12 @@
     "new": "新對話",
     "history": "歷史記錄",
     "clearHistory": "清除歷史",
-    "noHistory": "無搜尋歷史"
+    "noHistory": "無搜尋歷史",
+    "deleteChat": "刪除對話",
+    "deleteChatConfirmTitle": "您確定要刪除此對話嗎？",
+    "deleteChatConfirmDescription": "此操作無法復原。這將永久刪除此對話歷史記錄。",
+    "delete": "刪除",
+    "chatActions": "對話動作"
   },
   "userMenu": {
     "theme": "主題",
