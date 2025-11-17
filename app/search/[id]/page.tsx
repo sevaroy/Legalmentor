@@ -8,6 +8,8 @@ import { convertToUIMessages } from '@/lib/utils/index'
 
 import { Chat } from '@/components/chat'
 
+// Force dynamic rendering for search pages
+export const dynamic = 'force-dynamic'
 export const maxDuration = 60
 
 export async function generateMetadata(props: {

@@ -6,6 +6,8 @@ import { getModels } from '@/lib/config/models'
 
 import { Chat } from '@/components/chat'
 
+// Force dynamic rendering for search pages
+export const dynamic = 'force-dynamic'
 export const maxDuration = 60
 
 export default async function SearchPage(props: {
