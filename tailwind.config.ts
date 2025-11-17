@@ -147,22 +147,6 @@ const config = {
             opacity: '0'
           }
         },
-        'wiggle': {
-          '0%, 100%': { transform: 'rotate(-3deg)' },
-          '50%': { transform: 'rotate(3deg)' }
-        },
-        'float': {
-          '0%, 100%': { transform: 'translateY(0px)' },
-          '50%': { transform: 'translateY(-10px)' }
-        },
-        'glow': {
-          '0%, 100%': { boxShadow: '0 0 5px rgba(59, 130, 246, 0.5)' },
-          '50%': { boxShadow: '0 0 20px rgba(59, 130, 246, 0.8)' }
-        },
-        'typewriter': {
-          'from': { width: '0' },
-          'to': { width: '100%' }
-        }
       },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
@@ -170,11 +154,7 @@ const config = {
         'collapse-down': 'collapse-down 0.1s ease-in-out',
         'collapse-up': 'collapse-up 0.1s ease-in-out',
         'slide-in-right': 'slide-in-right 0.2s ease-out',
-        'slide-out-right': 'slide-out-right 0.2s ease-out',
-        'wiggle': 'wiggle 1s ease-in-out infinite',
-        'float': 'float 3s ease-in-out infinite',
-        'glow': 'glow 2s ease-in-out infinite alternate',
-        'typewriter': 'typewriter 2s steps(40, end) forwards'
+        'slide-out-right': 'slide-out-right 0.2s ease-out'
       },
       fontFamily: {
         sans: ['var(--font-sans)', ...fontFamily.sans]
