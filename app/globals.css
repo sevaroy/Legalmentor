@@ -63,47 +63,47 @@
     --foreground: 0 0% 98%;
 
     --card: 0 0% 12%;
-    --card-foreground: 0 0% 70%;
+    --card-foreground: 0 0% 85%; /* Improved contrast from 70% to 85% */
 
-    --popover: 0 0% 8%;
+    --popover: 0 0% 10%;
     --popover-foreground: 0 0% 98%;
 
-    /* Brand Blue - Dark Mode */
-    --primary: 221 83% 60%;
-    --primary-foreground: 0 0% 98%;
+    /* Brand Blue - Dark Mode with better contrast */
+    --primary: 221 83% 65%; /* Lightened for better contrast */
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 0 0% 14.9%;
+    --secondary: 0 0% 16%;
     --secondary-foreground: 0 0% 98%;
 
-    --muted: 0 0% 14.9%;
-    --muted-foreground: 0 0% 63.9%;
+    --muted: 0 0% 16%;
+    --muted-foreground: 0 0% 75%; /* Improved contrast from 63.9% to 75% */
 
-    --accent: 221 83% 15%;
-    --accent-foreground: 221 83% 90%;
+    --accent: 221 83% 18%; /* Slightly lighter for better contrast */
+    --accent-foreground: 221 83% 95%; /* Higher contrast */
 
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 98%;
+    --destructive: 0 70% 45%; /* Better contrast */
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 0 0% 20%;
-    --input: 0 0% 20%;
-    --ring: 221 83% 60%;
-    --chart-1: 220 70% 50%;
-    --chart-2: 160 60% 45%;
-    --chart-3: 30 80% 55%;
-    --chart-4: 280 65% 60%;
-    --chart-5: 340 75% 55%;
+    --border: 0 0% 24%; /* Improved visibility */
+    --input: 0 0% 22%; /* Better contrast */
+    --ring: 221 83% 65%;
+    --chart-1: 220 70% 55%;
+    --chart-2: 160 60% 50%;
+    --chart-3: 30 80% 60%;
+    --chart-4: 280 65% 65%;
+    --chart-5: 340 75% 60%;
 
-    --accent-blue: 221 83% 15%;
-    --accent-blue-foreground: 221 83% 90%;
-    --accent-blue-border: 221 83% 25%;
-    --sidebar-background: 0 0% 5%;
-    --sidebar-foreground: 0 0% 90%;
-    --sidebar-primary: 221 83% 60%;
-    --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 221 83% 12%;
-    --sidebar-accent-foreground: 221 83% 90%;
-    --sidebar-border: 0 0% 15%;
-    --sidebar-ring: 221 83% 60%;
+    --accent-blue: 221 83% 18%;
+    --accent-blue-foreground: 221 83% 95%;
+    --accent-blue-border: 221 83% 30%;
+    --sidebar-background: 0 0% 6%;
+    --sidebar-foreground: 0 0% 92%; /* Improved contrast */
+    --sidebar-primary: 221 83% 65%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 221 83% 14%;
+    --sidebar-accent-foreground: 221 83% 95%; /* Improved contrast */
+    --sidebar-border: 0 0% 18%; /* Better visibility */
+    --sidebar-ring: 221 83% 65%;
   }
 }
 
@@ -113,6 +113,71 @@
   }
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+/* Mobile 優化 - 通用改進 */
+@media (max-width: 768px) {
+  /* 確保觸控目標至少 44x44px (WCAG 2.1 Level AAA) */
+  button,
+  a,
+  input[type="button"],
+  input[type="submit"],
+  [role="button"] {
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  /* 改善移動端間距 */
+  .container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  /* 優化觸控反饋 */
+  button:active,
+  [role="button"]:active {
+    transform: scale(0.98);
+    transition: transform 0.1s ease;
+  }
+
+  /* 防止文字選擇干擾觸控 */
+  button,
+  [role="button"] {
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+  }
+
+  /* 改善滾動行為 */
+  * {
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* 優化輸入框 */
+  input,
+  textarea {
+    font-size: 16px; /* 防止 iOS Safari 自動縮放 */
+  }
+}
+
+/* 小屏幕優化 */
+@media (max-width: 475px) {
+  /* 減少間距以節省空間 */
+  .gap-4 {
+    gap: 0.75rem;
+  }
+
+  .gap-6 {
+    gap: 1rem;
+  }
+
+  /* 優化文字大小 */
+  h1 {
+    font-size: 1.5rem;
+  }
+
+  h2 {
+    font-size: 1.25rem;
   }
 }
 
@@ -134,18 +199,47 @@
 
   /* 調整滾動容器高度 */
   #scroll-container {
-    padding-top: 2rem;
-    padding-bottom: 2rem;
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
   }
 
   /* 減少 logo 和標題大小 */
   .legal-mentor-logo {
-    width: 3rem;
-    height: 3rem;
+    width: 2.5rem;
+    height: 2.5rem;
   }
 
   /* 緊湊的按鈕間距 */
   .chat-section {
-    margin-bottom: 1rem;
+    margin-bottom: 0.75rem;
+  }
+
+  /* 減少垂直間距 */
+  .py-4 {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+  }
+}
+
+/* 改善移動端表單體驗 */
+@media (hover: none) and (pointer: coarse) {
+  /* 增加表單元素間距 */
+  form > * + * {
+    margin-top: 1rem;
+  }
+
+  /* 優化下拉選單 */
+  select {
+    min-height: 44px;
+    font-size: 16px;
+  }
+}
+
+/* 高對比度模式支持 */
+@media (prefers-contrast: high) {
+  button,
+  a {
+    outline: 2px solid currentColor;
+    outline-offset: 2px;
   }
 }
