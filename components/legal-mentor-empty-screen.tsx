@@ -34,24 +34,26 @@ export function LegalMentorEmptyScreen({
 }) {
   return (
     <div className={`mx-auto w-full transition-all ${className}`}>
-      <div className="mt-6">
+      <div className="mt-8">
         {/* 示例問題網格 */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {legalExampleMessages.map((message, index) => {
             const IconComponent = message.icon
             return (
               <Button
                 key={index}
                 variant="outline"
-                className="h-auto p-4 text-left justify-start hover:bg-muted/50 transition-colors rounded-lg"
+                className="h-auto p-5 text-left justify-start hover:bg-accent/50 hover:border-primary/30 hover:shadow-lg hover:scale-[1.02] transition-all duration-300 rounded-xl group"
                 onClick={() => submitMessage(message.message)}
               >
-                <div className="flex items-start space-x-3 w-full">
-                  <div className="flex-shrink-0 mt-0.5">
-                    <IconComponent className="size-4 text-muted-foreground" />
+                <div className="flex items-start space-x-4 w-full">
+                  <div className="flex-shrink-0">
+                    <div className="p-3 rounded-lg bg-accent group-hover:bg-primary/10 transition-colors">
+                      <IconComponent className="size-5 text-primary" />
+                    </div>
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium">
+                    <p className="text-sm font-semibold text-foreground group-hover:text-primary transition-colors">
                       {message.heading}
                     </p>
                   </div>

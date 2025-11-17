@@ -108,11 +108,11 @@ export function LegalMentorChatPanel({
       {messages.length === 0 && (
         <FadeIn delay={100}>
           <div className="mb-10 flex flex-col items-center gap-4">
-            <div className="text-center space-y-2">
-              <h1 className="text-3xl font-semibold text-foreground">
+            <div className="text-center space-y-3">
+              <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-primary via-blue-600 to-primary bg-clip-text text-transparent">
                 有什麼法律問題需要協助嗎？
               </h1>
-              <p className="text-muted-foreground text-base max-w-xl">
+              <p className="text-muted-foreground text-base md:text-lg max-w-2xl mx-auto">
                 我可以幫您查詢判決案例、解釋法律條文、分析法律問題
               </p>
             </div>
@@ -143,10 +143,10 @@ export function LegalMentorChatPanel({
 
         {/* 輸入框設計 */}
         <div className={cn(
-          'relative flex flex-col w-full gap-2 rounded-xl border transition-all duration-200',
+          'relative flex flex-col w-full gap-2 rounded-2xl border-2 transition-all duration-300',
           isFocused
-            ? 'bg-background border-foreground/20 shadow-lg'
-            : 'bg-background border-border hover:border-foreground/20'
+            ? 'bg-background border-primary shadow-xl ring-4 ring-primary/10'
+            : 'bg-background border-border hover:border-primary/30'
         )}>
 
 
@@ -218,10 +218,10 @@ export function LegalMentorChatPanel({
                 size={'icon'}
                 variant={'default'}
                 className={cn(
-                  'rounded-full transition-colors',
+                  'rounded-full transition-all duration-200',
                   isLoading
                     ? 'bg-destructive hover:bg-destructive/90'
-                    : 'bg-primary hover:bg-primary/90'
+                    : 'bg-primary hover:bg-primary/90 hover:scale-110 hover:shadow-lg'
                 )}
                 disabled={
                   (input.length === 0 && !isLoading) ||
