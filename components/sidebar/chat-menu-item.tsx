@@ -3,6 +3,7 @@
 import { useState, useTransition } from 'react'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
+import { useTranslations } from 'next-intl'
 
 import { MoreHorizontal, Trash2 } from 'lucide-react'
 import { toast } from 'sonner'
@@ -38,14 +39,18 @@ interface ChatMenuItemProps {
   chat: Chat
 }
 
-const formatDateWithTime = (date: Date | string) => {
+const formatDateWithTime = (
+  date: Date | string,
+  todayText: string,
+  yesterdayText: string
+) => {
   const parsedDate = new Date(date)
   const now = new Date()
   const yesterday = new Date()
   yesterday.setDate(yesterday.getDate() - 1)
 
   const formatTime = (date: Date) => {
-    return date.toLocaleString('en-US', {
+    return date.toLocaleString('zh-TW', {
       hour: '2-digit',
       minute: '2-digit',
       hour12: true
@@ -57,15 +62,15 @@ const formatDateWithTime = (date: Date | string) => {
     parsedDate.getMonth() === now.getMonth() &&
     parsedDate.getFullYear() === now.getFullYear()
   ) {
-    return `Today, ${formatTime(parsedDate)}`
+    return `${todayText}，${formatTime(parsedDate)}`
   } else if (
     parsedDate.getDate() === yesterday.getDate() &&
     parsedDate.getMonth() === yesterday.getMonth() &&
     parsedDate.getFullYear() === yesterday.getFullYear()
   ) {
-    return `Yesterday, ${formatTime(parsedDate)}`
+    return `${yesterdayText}，${formatTime(parsedDate)}`
   } else {
-    return parsedDate.toLocaleString('en-US', {
+    return parsedDate.toLocaleString('zh-TW', {
       year: 'numeric',
       month: '2-digit',
       day: '2-digit',
@@ -77,6 +82,8 @@ const formatDateWithTime = (date: Date | string) => {
 }
 
 export function ChatMenuItem({ chat }: ChatMenuItemProps) {
+  const t = useTranslations('sidebar')
+  const tCommon = useTranslations('common')
   const pathname = usePathname()
   const isActive = pathname === chat.path
   const router = useRouter()
@@ -124,7 +131,11 @@ export function ChatMenuItem({ chat }: ChatMenuItemProps) {
             {chat.title}
           </div>
           <div className="text-xs text-muted-foreground w-full">
-            {formatDateWithTime(chat.createdAt)}
+            {formatDateWithTime(
+              chat.createdAt,
+              tCommon('today'),
+              tCommon('yesterday')
+            )}
           </div>
         </Link>
       </SidebarMenuButton>
@@ -139,7 +150,7 @@ export function ChatMenuItem({ chat }: ChatMenuItemProps) {
             ) : (
               <MoreHorizontal size={16} />
             )}
-            <span className="sr-only">Chat Actions</span>
+            <span className="sr-only">{t('chatActions')}</span>
           </SidebarMenuAction>
         </DropdownMenuTrigger>
         <DropdownMenuContent side="right" align="start">
@@ -154,20 +165,19 @@ export function ChatMenuItem({ chat }: ChatMenuItemProps) {
                 }}
               >
                 <Trash2 size={14} />
-                Delete Chat
+                {t('deleteChat')}
               </DropdownMenuItem>
             </AlertDialogTrigger>
             <AlertDialogContent>
               <AlertDialogHeader>
-                <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                <AlertDialogTitle>{t('deleteChatConfirmTitle')}</AlertDialogTitle>
                 <AlertDialogDescription>
-                  This action cannot be undone. This will permanently delete
-                  this chat history.
+                  {t('deleteChatConfirmDescription')}
                 </AlertDialogDescription>
               </AlertDialogHeader>
               <AlertDialogFooter>
                 <AlertDialogCancel disabled={isPending}>
-                  Cancel
+                  {tCommon('cancel')}
                 </AlertDialogCancel>
                 <AlertDialogAction
                   disabled={isPending}
@@ -179,7 +189,7 @@ export function ChatMenuItem({ chat }: ChatMenuItemProps) {
                       <Spinner />
                     </div>
                   ) : (
-                    'Delete'
+                    t('delete')
                   )}
                 </AlertDialogAction>
               </AlertDialogFooter>
