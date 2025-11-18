@@ -36,7 +36,8 @@ const config = {
         foreground: 'hsl(var(--foreground))',
         primary: {
           DEFAULT: 'hsl(var(--primary))',
-          foreground: 'hsl(var(--primary-foreground))'
+          foreground: 'hsl(var(--primary-foreground))',
+          dark: 'hsl(var(--primary-dark))'
         },
         secondary: {
           DEFAULT: 'hsl(var(--secondary))',
@@ -57,7 +58,23 @@ const config = {
             DEFAULT: 'hsl(var(--accent-blue))',
             foreground: 'hsl(var(--accent-blue-foreground))',
             border: 'hsl(var(--accent-blue-border))'
+          },
+          purple: {
+            DEFAULT: 'hsl(var(--accent-purple))',
+            foreground: 'hsl(var(--accent-purple-foreground))'
+          },
+          cyan: {
+            DEFAULT: 'hsl(var(--accent-cyan))',
+            foreground: 'hsl(var(--accent-cyan-foreground))'
           }
+        },
+        success: {
+          DEFAULT: 'hsl(var(--success))',
+          foreground: 'hsl(var(--success-foreground))'
+        },
+        warning: {
+          DEFAULT: 'hsl(var(--warning))',
+          foreground: 'hsl(var(--warning-foreground))'
         },
         popover: {
           DEFAULT: 'hsl(var(--popover))',
