@@ -1,4 +1,10 @@
 import Link from 'next/link'
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: '404 - 頁面未找到',
+  description: '您訪問的頁面不存在'
+}
 
 export default function NotFound() {
   return (
