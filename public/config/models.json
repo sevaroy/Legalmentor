@@ -160,7 +160,7 @@
     },
     {
       "id": "deepseek-reasoner",
-      "name": "DeepSeek R1 (V3.1)",
+      "name": "DeepSeek R1 (V3.2)",
       "provider": "DeepSeek",
       "providerId": "deepseek",
       "enabled": true,
@@ -169,7 +169,7 @@
     },
     {
       "id": "deepseek-chat",
-      "name": "DeepSeek V3.1",
+      "name": "DeepSeek V3.2",
       "provider": "DeepSeek",
       "providerId": "deepseek",
       "enabled": true,
